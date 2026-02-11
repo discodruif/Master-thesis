@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 # Load NYT API Key
-with open("../config/nyt-api-key.txt") as f:
+with open("config/nyt-api-key.txt") as f:
     API_KEY = f.read().strip()
 
 # Base URL
