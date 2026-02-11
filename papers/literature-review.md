@@ -31,4 +31,14 @@
 **Key Findings:**  
 - ML algorithms combined with Monte Carlo simulations show effectiveness in pricing American options accurately.
 - Proposes innovative alternatives to overcome the limitations of Black-Scholes-Merton models.  
-**Relevance to My Thesis:** Tools like Monte Carlo methods combined with ML offer proven strategies for tackling complex option products.
+**Relevance to My Thesis:** Tools like Monte Carlo methods combined with ML offer proven strategies for tackling complex option products.---
+### Deep Reinforcement Learning for Trading
+**Authors:** Bryan Lim, Stefan Zohren
+**Year:** 2019
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/abs/1911.10107)
+**Key Findings:**
+- Introduces deep reinforcement learning algorithms for trading continuous futures contracts.
+- Explores both discrete and continuous action spaces, while integrating volatility scaling to optimize reward functions.
+- Observes how different risk-management techniques incorporated into the models affect profitability in high-risk trading environments.
+**Relevance to My Thesis:** Provides a foundational understanding of how reinforcement learning approaches can be systematically employed to optimize trading strategies, aligning with advanced machine-learning applications in financial markets.
