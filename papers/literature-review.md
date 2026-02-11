@@ -75,3 +75,14 @@
 - Links LOB microstructural assessments directly with mid-price forecasting using DeepLOB, a state-of-the-art deep learning model.
 - Demonstrates superior forecasting performance for mid-price changes in financial trading data.
 **Relevance to My Thesis:** This study provides insights into market microstructure analysis and leverages neural architectures for prediction, aligning closely with both the algorithmic trading and financial modeling aspects of my thesis.
+---
+### Less is More: AI Decision-Making using Dynamic Deep Neural Networks for Short-Term Stock Index Prediction
+**Authors:** Not specified
+**Year:** 2024
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/html/2408.11740v1)
+**Key Findings:**
+- Proposes an optimized decision-making model that samples market prices and their derivatives for day-to-day investment decisions (long/short/close).
+- Compares model accuracy using Gradient-Boosted Trees versus conventional models like LSTM and Random Forest.
+- Highlights substantial performance improvements using new dynamic deep neural network setups.
+**Relevance to My Thesis:** Showcases the application of Gradient-Boosting techniques in derivative pricing and evaluates their prediction performance against traditional ML models, demonstrating practical use cases for algorithmic trading strategies.
