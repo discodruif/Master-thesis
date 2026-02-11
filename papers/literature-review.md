@@ -86,3 +86,14 @@
 - Compares model accuracy using Gradient-Boosted Trees versus conventional models like LSTM and Random Forest.
 - Highlights substantial performance improvements using new dynamic deep neural network setups.
 **Relevance to My Thesis:** Showcases the application of Gradient-Boosting techniques in derivative pricing and evaluates their prediction performance against traditional ML models, demonstrating practical use cases for algorithmic trading strategies.
+---
+### Generative Adversarial Networks in Finance: An Overview
+**Authors:** Not specified
+**Year:** 2021
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/abs/2106.06364)
+**Key Findings:**
+- Provides a comprehensive overview of GANs applied to financial data, highlighting current capabilities and limitations.
+- Tests three established GAN architectures on financial time series, analyzing generated data for statistical fidelity.
+- Demonstrates practical applications of synthetic data generation for algorithmic trading and risk management.
+**Relevance to My Thesis:** Illustrates the use of GANs as a tool for synthesizing financial datasets, offering insights into enhanced modeling strategies and dataset augmentation.
