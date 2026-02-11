@@ -64,3 +64,14 @@
 - Introduces hierarchical clustering of sensitivity matrix dynamics approximated by neural networks for diversification and risk management.
 - Demonstrates the utility of neural network-based sensitivity approximations for portfolio optimization.
 **Relevance to My Thesis:** Explores leveraging neural networks to optimize portfolios, contributing insights into systematic and idiosyncratic risk optimization and diversification techniques critical for algorithmic trading strategies.
+---
+### Deep Limit Order Book Forecasting: A Microstructural Guide
+**Authors:** Not specified
+**Year:** 2024
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/html/2403.09267v4)
+**Key Findings:**
+- Investigates microstructural properties of the limit order book (LOB) and their dynamics.
+- Links LOB microstructural assessments directly with mid-price forecasting using DeepLOB, a state-of-the-art deep learning model.
+- Demonstrates superior forecasting performance for mid-price changes in financial trading data.
+**Relevance to My Thesis:** This study provides insights into market microstructure analysis and leverages neural architectures for prediction, aligning closely with both the algorithmic trading and financial modeling aspects of my thesis.
