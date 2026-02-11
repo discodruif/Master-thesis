@@ -42,3 +42,14 @@
 - Explores both discrete and continuous action spaces, while integrating volatility scaling to optimize reward functions.
 - Observes how different risk-management techniques incorporated into the models affect profitability in high-risk trading environments.
 **Relevance to My Thesis:** Provides a foundational understanding of how reinforcement learning approaches can be systematically employed to optimize trading strategies, aligning with advanced machine-learning applications in financial markets.
+---
+### Advanced Stock Market Prediction Using Long Short-Term Memory Networks: A Comprehensive Deep Learning Framework
+**Authors:** Not specified
+**Year:** 2025
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/abs/2505.05325)
+**Key Findings:**
+- Employs LSTM networks to provide advanced predictive modeling using financial time-series data for stock market movements.
+- Highlights the use of comprehensive frameworks to mitigate overfitting and improve model generalization capabilities.
+- Demonstrates significant improvements over traditional approaches for stock volatility analysis.
+**Relevance to My Thesis:** Provides in-depth understanding of how LSTM networks are effectively utilized to predict stock volatility, which is directly related to financial modeling and risk assessment critical in algorithmic trading.
