@@ -53,3 +53,14 @@
 - Highlights the use of comprehensive frameworks to mitigate overfitting and improve model generalization capabilities.
 - Demonstrates significant improvements over traditional approaches for stock volatility analysis.
 **Relevance to My Thesis:** Provides in-depth understanding of how LSTM networks are effectively utilized to predict stock volatility, which is directly related to financial modeling and risk assessment critical in algorithmic trading.
+---
+### Portfolio Optimization based on Neural Networks Sensitivities from Assets Dynamics respect Common Drivers
+**Authors:** Not specified
+**Year:** 2022
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/abs/2202.08921)
+**Key Findings:**
+- Proposes using a sensitivity matrix to measure the projection of portfolio constituents on a vector space formed by returns of common drivers.
+- Introduces hierarchical clustering of sensitivity matrix dynamics approximated by neural networks for diversification and risk management.
+- Demonstrates the utility of neural network-based sensitivity approximations for portfolio optimization.
+**Relevance to My Thesis:** Explores leveraging neural networks to optimize portfolios, contributing insights into systematic and idiosyncratic risk optimization and diversification techniques critical for algorithmic trading strategies.
