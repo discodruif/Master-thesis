@@ -97,3 +97,14 @@
 - Tests three established GAN architectures on financial time series, analyzing generated data for statistical fidelity.
 - Demonstrates practical applications of synthetic data generation for algorithmic trading and risk management.
 **Relevance to My Thesis:** Illustrates the use of GANs as a tool for synthesizing financial datasets, offering insights into enhanced modeling strategies and dataset augmentation.
+---
+### Revisiting Ensemble Methods for Stock and Crypto Trading Tasks
+**Authors:** Not specified
+**Year:** 2025
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/html/2501.10709v1)
+**Key Findings:**
+- Evaluates the use of various ensemble learning techniques for both stock and cryptocurrency trading tasks.
+- Applies ensemble reinforcement learning strategies to navigate high-dimensional financial markets, including portfolio management and option pricing.
+- Demonstrates effective results in improving decision-making for trading algorithms within volatile markets.
+**Relevance to My Thesis:** Highlights the relevance of ensemble methods as robust tools for trading strategy optimization, aligning with the goal of improving algorithmic trading performance in high-volatility markets.
