@@ -108,3 +108,14 @@
 - Applies ensemble reinforcement learning strategies to navigate high-dimensional financial markets, including portfolio management and option pricing.
 - Demonstrates effective results in improving decision-making for trading algorithms within volatile markets.
 **Relevance to My Thesis:** Highlights the relevance of ensemble methods as robust tools for trading strategy optimization, aligning with the goal of improving algorithmic trading performance in high-volatility markets.
+---
+### Your Spending Needs Attention: Modeling Financial Habits with Transformers
+**Authors:** Not specified
+**Year:** 2025
+**Source:** arXiv
+**Link:** [Read Full Paper](https://www.arxiv.org/pdf/2507.23267)
+**Key Findings:**
+- Develops a causal transformer model to effectively predict future financial behavior and spending patterns.
+- Explores the application of multimodal domain adaptation using Transformers for sequential financial data.
+- Provides benchmarks showing improved predictive accuracy compared to baseline models using real-world transactions data.
+**Relevance to My Thesis:** Focuses on the utility of Transformer models for sequential prediction in financial datasets, offering insights into extending model architectures for long-term decision optimization.
