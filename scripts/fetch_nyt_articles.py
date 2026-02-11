@@ -43,7 +43,7 @@ for query in queries:
     print(f"Fetching articles for query: {query}")
     try:
         articles = fetch_articles(query, begin_date, end_date)
-        with open(f"../data/nyt/{query.replace(' ', '_').lower()}_articles.json", "w") as f:
+        with open(f"data/nyt/{query.replace(' ', '_').lower()}_articles.json", "w") as f:
             json.dump(articles, f, indent=4)
         print(f"Saved articles for {query}")
     except Exception as e:
