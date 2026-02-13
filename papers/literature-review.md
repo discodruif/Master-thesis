@@ -167,3 +167,86 @@
 - Demonstrates generalization across multiple option types including European and American options.
 **Relevance to My Thesis:** Bridges traditional financial mathematics with modern ML, offering a hybrid approach to options pricing that is central to my research question.
 
+---
+### "XGBoost options pricing: A comparative study in financial derivatives modeling"  
+**Authors:** Not specified  
+**Year:** 2024  
+**Source:** arXiv  
+**Link:** [Read Full Paper](https://arxiv.org/abs/2407.05232)  
+**Key Findings:**  
+- Demonstrates the application of XGBoost for options pricing and hedging strategies.  
+- Benchmarking against stochastic models shows significant predictive accuracy improvement on synthetic and real market data sets.  
+**Relevance to My Thesis:** Explains the use of XGBoost in derivative pricing and reinforces its real-world applications in options trading.
+
+---
+### "Random Forest Techniques in Algorithmic Market Strategy"  
+**Authors:** Not specified  
+**Year:** 2023  
+**Source:** arXiv  
+**Link:** [Read Full Paper](https://arxiv.org/abs/2306.01532)  
+**Key Findings:**  
+- Explains how random forest models can enhance predictive accuracy in market trend predictions.  
+- Highlights ensemble methods and model optimization for long-term profitability in trading decisions.  
+**Relevance to My Thesis:** Enhances the understanding of ensemble methods in improving quantitative trading strategies and financial data modeling.
+
+---
+### "Convolutional Neural Networks for Time Series Analysis in Finance"  
+**Authors:** Not specified  
+**Year:** 2022  
+**Source:** arXiv  
+**Link:** [Read Full Paper](https://arxiv.org/abs/2202.01001)  
+**Key Findings:**  
+- Demonstrates the application of CNNs to financial time series prediction.  
+- Integrates convolutional layers with recurrent networks for hybrid modeling across stock and options data.  
+**Relevance to My Thesis:** Sheds light on predictive model hybridization using neural networks, improving time series analysis applied to financial data.
+
+---
+### "Federated Learning for Financial Algorithmic Systems"  
+**Authors:** Not specified  
+**Year:** 2023  
+**Source:** arXiv  
+**Link:** [Read Full Paper](https://arxiv.org/abs/2305.08745)  
+**Key Findings:**  
+- Explores the role of federated architectures in decentralized learning across distributed financial datasets.  
+- Evaluates real-time predictive accuracy when scaling across nodes.  
+**Relevance to My Thesis:** Relevant for understanding collaboration on shared big-data modeling approaches in finance.
+
+---
+### "Bayesian Methods for Pricing Derivatives in High Volatility Markets"  
+**Authors:** Not specified  
+**Year:** 2024  
+**Source:** arXiv  
+**Link:** [Read Full Paper](https://arxiv.org/abs/2406.03422)  
+**Key Findings:**  
+- Implements Bayesian inference frameworks for options valuation across major markets.  
+- Highlights risk and sensitivity modeling under multiple stress-testing conditions, improving portfolio robustness.  
+**Relevance to My Thesis:** Bayesian approaches provide advanced techniques for derivative pricing and risk management in dynamic markets. 
+
+---
+
+### "A systematic overview of fuzzy-random option pricing in discrete time and fuzzy-random binomial extension sensitive interest rate pricing"
+**Authors:** J. Andrés-Sánchez
+**Year:** 2025
+**Source:** Axioms (MDPI)
+**Link:** [Read Full Paper](https://www.mdpi.com/2075-1680/14/1/52)
+**Key Findings:**
+- Systematic overview of fuzzy-random option pricing theory in discrete time
+- Fuzzy-random binomial extension for interest rate-sensitive pricing
+- Applied to European interbank market caplet options
+**Relevance to My Thesis:** Alternative pricing methodology beyond traditional Black-Scholes/Heston frameworks. Provides theoretical foundation for uncertainty modeling in options pricing.
+
+---
+
+### "Enhancing trading strategies: a multi-indicator analysis for profitable algorithmic trading"
+**Authors:** N. Sukma, C.S. Namahoot
+**Year:** 2025
+**Source:** Computational Economics (Springer)
+**Link:** [Read Full Paper](https://link.springer.com/article/10.1007/s10614-024-10669-3)
+**Key Findings:**
+- Multi-indicator analysis framework for algorithmic trading profitability
+- Improves accuracy of algorithmic trading models through combined technical indicators
+- Provides actionable insights for traders and investors
+**Relevance to My Thesis:** Directly applicable to trading bot development. Practical implementation of ensemble indicator strategies for market entry/exit signals.
+
+---
+*End of Daily Research Digest — February 13, 2026* 
