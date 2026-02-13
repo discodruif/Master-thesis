@@ -249,4 +249,33 @@
 **Relevance to My Thesis:** Directly applicable to trading bot development. Practical implementation of ensemble indicator strategies for market entry/exit signals.
 
 ---
-*End of Daily Research Digest — February 13, 2026* 
+*End of Daily Research Digest — February 13, 2026* ---
+### "Deep hedging"
+**Authors:** Hans Buehler, Lukas Gonon, Josef Teichmann, Ben Wood
+**Year:** 2018
+**Source:** Semantic Scholar / Quantitative Finance
+**Link:** [Read](https://www.semanticscholar.org/paper/5728b151bb5ab14d71ea05299b3f630fc64de31f)
+**Key Findings:**
+- Frames hedging as a sequential decision problem solvable with deep neural networks.
+- Demonstrates end-to-end learning of hedging strategies for derivatives portfolios under realistic dynamics.
+**Relevance to My Thesis:** Core reference for using deep learning to learn hedging/pricing behavior in derivatives markets; establishes a benchmark and language for ML-based derivative risk management.
+---
+### "Pricing and hedging American-style options with deep learning"
+**Authors:** Sebastian Becker, Patrick Cheridito, Arnulf Jentzen
+**Year:** 2020
+**Source:** Journal of Risk and Financial Management (MDPI)
+**Link:** [Read](https://www.mdpi.com/1911-8074/13/7/158)
+**Key Findings:**
+- Uses deep learning to approximate continuation values and hedging strategies for American-style derivatives.
+- Shows strong scalability to higher dimensions relative to classical regression-based LSM approaches.
+**Relevance to My Thesis:** Directly on American option pricing/hedging with neural nets; useful for a methodology section that contrasts ML approaches with LSM/MC baselines.
+---
+### "FinRL: A deep reinforcement learning library for automated stock trading in quantitative finance"
+**Authors:** Xiao-Yang Liu, Hongyang Yang, Qi Chen, Renyu Zhang, Lixiang Yang, et al.
+**Year:** 2020
+**Source:** arXiv
+**Link:** [Read](https://arxiv.org/abs/2011.09607)
+**Key Findings:**
+- Provides a reproducible DRL framework, market environments, and benchmark agents for trading.
+- Emphasizes end-to-end pipelines (data → environment → agent → evaluation) with risk-aware metrics.
+**Relevance to My Thesis:** Strong, widely cited foundation for ML/RL algorithmic trading experiments and evaluation design (baselines, metrics, train/test splits).
