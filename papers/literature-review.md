@@ -309,6 +309,39 @@
 - Introduces deep recurrent architectures to handle path-dependence and high-dimensional state representations in American option pricing.
 - Provides joint pricing-and-hedging evaluation, emphasizing out-of-sample performance.
 **Relevance to My Thesis:** Connects sequence modeling (RNN-style) with American-style optimal stopping and hedging—useful for designing model classes beyond feed-forward networks.
+
+---
+### "Deep learning volatility: a deep neural network perspective on pricing and calibration in (rough) volatility models"
+**Authors:** Blanka Horvath, Aitor Muguruza, Mehdi Tomas
+**Year:** 2021
+**Source:** Google Scholar / Brave (Quantitative Finance)
+**Link:** [Read](https://www.tandfonline.com/doi/full/10.1080/14697688.2020.1817974)
+**Key Findings:**
+- Uses neural networks as fast surrogates for pricing and calibration across stochastic and rough volatility model families.
+- Shows how representing implied vol / option prices on grids enables effective learning for calibration tasks.
+**Relevance to My Thesis:** Strong benchmark for using deep learning to approximate pricing engines and speed up calibration—directly relevant for ML-driven options pricing pipelines.
+
+---
+### "Deep smoothing of the implied volatility surface"
+**Authors:** Damien Ackerer, Natalia Tagasovska, Thomas Vatter, et al.
+**Year:** 2020
+**Source:** Google Scholar (NeurIPS)
+**Link:** [Read](https://proceedings.neurips.cc/paper/2020/hash/858e47701162578e5e627cd93ab0938a-Abstract.html)
+**Key Findings:**
+- Proposes deep-learning-based approaches to smooth implied volatility surfaces while respecting structure in option data.
+- Demonstrates improved stability/regularization versus ad-hoc smoothing, supporting downstream pricing and risk.
+**Relevance to My Thesis:** Directly informs volatility-surface modeling as an intermediate representation for option pricing, calibration, and feature engineering.
+
+---
+### "Multistep forecast of the implied volatility surface using deep learning"
+**Authors:** Nikita Medvedev, Zhijie Wang
+**Year:** 2022
+**Source:** Google Scholar (Journal of Futures Markets)
+**Link:** [Read](https://onlinelibrary.wiley.com/doi/abs/10.1002/fut.22302)
+**Key Findings:**
+- Develops deep learning models for multi-step-ahead forecasting of the implied volatility surface.
+- Evaluates forecasting accuracy across horizons, highlighting benefits for trading and risk management.
+**Relevance to My Thesis:** Provides methods and evaluation ideas for predicting volatility surfaces—useful for options strategy signals and model-based scenario generation.
 ---
 ### "Pricing cryptocurrency options with machine learning regression for handling market volatility"
 **Authors:** Alessio Brini, Jim Lenz
@@ -359,3 +392,4 @@
 - Uses multi-agent RL to coordinate trading decisions in high-frequency settings.
 - Emphasizes interaction effects and stability issues absent in single-agent formulations.
 **Relevance to My Thesis:** Useful reference if the thesis includes algorithmic trading strategy learning; highlights practical RL complications (multi-agent dynamics, stability, evaluation) in market microstructure contexts.
+
