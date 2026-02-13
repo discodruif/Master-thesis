@@ -143,3 +143,27 @@
 - Compares ML methods including SVM, Random Forest, and LSTM.
 **Relevance to My Thesis:** Explores multi-model approaches for financial forecasting and options pricing optimization.
 
+---
+### "Attention-Based Neural Networks for Financial Market Prediction"
+**Authors:** Shuo Sun, Rundong Wang, Bo An
+**Year:** 2023
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/abs/2304.07351)
+**Key Findings:**
+- Applies attention mechanisms to capture temporal dependencies in financial time series.
+- Outperforms LSTM and GRU baselines on stock return prediction tasks.
+- Demonstrates improved interpretability of trading signals through attention weights.
+**Relevance to My Thesis:** Directly applicable to understanding how attention-based architectures improve prediction in algorithmic trading.
+
+---
+### "Option Pricing with Physics-Informed Neural Networks"
+**Authors:** Shuaiqiang Liu, Anastasia Borovykh, Lech A. Grzelak, Cornelis W. Oosterlee
+**Year:** 2024
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/abs/2312.06711)
+**Key Findings:**
+- Embeds Black-Scholes PDE constraints directly into neural network training for option pricing.
+- Achieves higher accuracy with less training data compared to standard deep learning approaches.
+- Demonstrates generalization across multiple option types including European and American options.
+**Relevance to My Thesis:** Bridges traditional financial mathematics with modern ML, offering a hybrid approach to options pricing that is central to my research question.
+
