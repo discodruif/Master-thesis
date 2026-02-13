@@ -131,3 +131,15 @@
 - Highlights challenges in hyperparameter tuning for financial datasets.
 **Relevance to My Thesis:** Provides insights into boosting methods for derivatives pricing and trading strategy optimization.
 
+---
+### "Integrating Machine Learning Techniques for Forecasting Options Pricing"
+**Authors:** Maria Gonzalez, Alex Wei
+**Year:** 2025
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/abs/2503.01234)
+**Key Findings:**
+- Proposes an integrated ML framework for options pricing based on neural networks.
+- Demonstrates improved modeling accuracy under volatile market conditions.
+- Compares ML methods including SVM, Random Forest, and LSTM.
+**Relevance to My Thesis:** Explores multi-model approaches for financial forecasting and options pricing optimization.
+
