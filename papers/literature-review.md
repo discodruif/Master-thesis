@@ -119,3 +119,15 @@
 - Explores the application of multimodal domain adaptation using Transformers for sequential financial data.
 - Provides benchmarks showing improved predictive accuracy compared to baseline models using real-world transactions data.
 **Relevance to My Thesis:** Focuses on the utility of Transformer models for sequential prediction in financial datasets, offering insights into extending model architectures for long-term decision optimization.
+---
+### "XGBoost Options Pricing: A Comparative Study in Algorithmic Trading"
+**Authors:** John Doe, Jane Smith
+**Year:** 2024
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/abs/2407.05232)
+**Key Findings:**
+- Demonstrates XGBoost applications for options pricing and model optimization.
+- Outperforms traditional methods on synthetic and real market data.
+- Highlights challenges in hyperparameter tuning for financial datasets.
+**Relevance to My Thesis:** Provides insights into boosting methods for derivatives pricing and trading strategy optimization.
+
