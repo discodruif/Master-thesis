@@ -342,6 +342,28 @@
 - Develops deep learning models for multi-step-ahead forecasting of the implied volatility surface.
 - Evaluates forecasting accuracy across horizons, highlighting benefits for trading and risk management.
 **Relevance to My Thesis:** Provides methods and evaluation ideas for predicting volatility surfaces—useful for options strategy signals and model-based scenario generation.
+
+---
+### "Deep learning from implied volatility surfaces"
+**Authors:** Bryan T. Kelly, Boris Kuznetsov, Sergey Malamud, et al.
+**Year:** 2023
+**Source:** Google Scholar (SSRN)
+**Link:** [Read](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4531181)
+**Key Findings:**
+- Treats implied volatility surfaces as informative state variables and applies deep learning to extract predictive structure.
+- Shows that nonlinear representations from IV surfaces can improve forecasting of returns/risks relative to simpler summaries.
+**Relevance to My Thesis:** Bridges options-implied information with ML predictors—useful for building trading signals and for feature construction for option pricing/hedging tasks.
+
+---
+### "Gated deep neural networks for implied volatility surfaces"
+**Authors:** Yifan Zheng, Yuxuan Yang, Bowei Chen
+**Year:** 2019
+**Source:** arXiv
+**Link:** [Read](https://arxiv.org/abs/1904.12834)
+**Key Findings:**
+- Proposes gated neural architectures tailored to learning the mapping from option inputs to implied vol surfaces.
+- Reports improved fit and generalization by incorporating inductive biases for surface dynamics.
+**Relevance to My Thesis:** Provides an explicit neural-architecture design for implied volatility surfaces, helpful for model selection and constraints when learning option-pricing functions.
 ---
 ### "Pricing cryptocurrency options with machine learning regression for handling market volatility"
 **Authors:** Alessio Brini, Jim Lenz
