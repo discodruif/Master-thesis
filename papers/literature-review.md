@@ -364,6 +364,28 @@
 - Proposes gated neural architectures tailored to learning the mapping from option inputs to implied vol surfaces.
 - Reports improved fit and generalization by incorporating inductive biases for surface dynamics.
 **Relevance to My Thesis:** Provides an explicit neural-architecture design for implied volatility surfaces, helpful for model selection and constraints when learning option-pricing functions.
+
+---
+### "A deep Q-learning based algorithmic trading system for commodity futures markets"
+**Authors:** Mehdi Massahi, Mostafa Mahootchi
+**Year:** 2024
+**Source:** Google Scholar (Expert Systems with Applications)
+**Link:** [Read](https://www.sciencedirect.com/science/article/pii/S0957417423022133)
+**Key Findings:**
+- Designs a deep Q-learning trading agent for commodity futures with explicit state/action/reward formulation.
+- Evaluates performance against baselines, highlighting the role of reward shaping and risk controls.
+**Relevance to My Thesis:** Direct RL-for-trading reference with futures data—useful for framing RL components, benchmarking, and discussing practical constraints (risk, transaction costs).
+
+---
+### "Deep Learning-Based BSDE Solver for Libor Market Model with Applications to Bermudan Swaption Pricing and Hedging"
+**Authors:** not specified (see paper)
+**Year:** 2018
+**Source:** Semantic Scholar / arXiv
+**Link:** [Read](https://arxiv.org/abs/1807.06622)
+**Key Findings:**
+- Uses deep learning to solve BSDEs arising in the Libor Market Model, enabling pricing/hedging for Bermudan swaptions.
+- Demonstrates feasibility of neural BSDE solvers for high-dimensional derivative pricing problems.
+**Relevance to My Thesis:** Extends beyond equity options to interest-rate derivatives; supports the broader claim that deep learning can tackle high-dimensional pricing/hedging where classical PDE/MC methods struggle.
 ---
 ### "Pricing cryptocurrency options with machine learning regression for handling market volatility"
 **Authors:** Alessio Brini, Jim Lenz
