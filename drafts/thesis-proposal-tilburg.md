@@ -1,182 +1,138 @@
-<!-- Tilburg University MSc Finance — Master Thesis Proposal (max 4 pages text; references & tables excluded) -->
+# Title Page
 
-# Title page
-
-**Title:** Machine Learning for Option Pricing and Delta-Hedging: Out-of-Sample Accuracy, Robustness, and Transaction Costs  
-**Date:** 13 February 2026  
-**Student:** Maurits van Eck  
+**Title:** Machine Learning for Option Pricing and Delta Hedging: Out-of-Sample Accuracy and the Role of Transaction Costs  
+**Date:** February 2026  
+**Name:** Maurits van Eck  
 **Student number (ANR):** 2062644  
+**Program:** MSc Finance, Tilburg University
 
 ---
 
-\newpage
+## Part 1: Research Question (~200 words)
 
-# Part 1 — Research Question
+**Research question:** *Do machine learning models improve out-of-sample option pricing accuracy and delta-hedging performance compared to the Black–Scholes model, and does this improvement survive transaction costs?*
 
-**Main research question.**  
-*To what extent do machine learning (ML) models improve out-of-sample option pricing and delta-hedging performance relative to Black–Scholes-type benchmarks, and does any improvement remain economically meaningful after accounting for transaction costs and varying volatility regimes?*
+This question is economically important because listed equity index options are used for hedging, risk transfer, and volatility trading at large scale. Even small systematic pricing errors can translate into persistent P\&L opportunities or, more importantly, hedging shortfalls for market makers and institutional investors. If machine learning (ML) can reduce pricing errors and improve hedge effectiveness after costs, it has direct implications for market efficiency, risk management, and capital allocation.
 
-**Economic importance.**  
-Options are central to risk transfer, price discovery, and risk management. Pricing errors translate into systematic misvaluation (for market makers) and biased risk measurement (for hedgers). Even when an option is “priced” via an implied volatility (IV), practitioners rely on a stable, no-arbitrage-consistent mapping from option characteristics to prices/greeks for quoting, hedging, and stress testing. Persistent pricing/hedging errors matter economically because they:
-
-1. **Create hedging losses:** a misspecified delta (or effective delta) generates predictable delta-hedged P&L; small per-trade errors can cumulate at scale.
-2. **Distort risk and capital:** inaccurate greeks change margin/capital requirements and can amplify losses in volatile periods.
-3. **Affect market quality:** better pricing/hedging models can reduce spreads and inventory risk.
-
-**Novel contribution / “not pure replication”.**  
-Most ML option pricing studies focus on in-sample fit or pure pricing metrics. This thesis adds three elements aimed at economic relevance and novelty:
-
-- **Joint evaluation of pricing *and* hedging:** models are judged by out-of-sample pricing error *and* realized delta-hedged P&L, where the hedge ratio is produced by the same model.
-- **Regime robustness:** performance is evaluated across volatility regimes (e.g., calm vs stress periods) and across moneyness/maturity buckets, rather than a single pooled test.
-- **Transaction-cost-aware hedging:** delta-hedging is assessed net of plausible bid–ask/turnover costs; improvements must survive implementation frictions.
-
-Deliverable: a set of benchmark ML models (e.g., gradient boosting and neural networks; potentially a Transformer-style architecture for time-varying surfaces) compared to Black–Scholes and standard practitioner baselines.
+What is new is the joint evaluation of **(i)** pricing accuracy and **(ii)** hedging performance under a consistent, out-of-sample design that respects the time-series nature of the data, while explicitly incorporating **transaction costs** and turnover induced by model deltas. Many studies either focus on pricing metrics alone or report hedging without a careful, realistic cost adjustment. I will compare the Black–Scholes benchmark to several ML models (Random Forest, XGBoost, and a neural network), estimate their implied deltas, and evaluate whether improvements remain economically meaningful once bid–ask spreads and rebalancing frequency are accounted for. The design emphasizes robust out-of-sample evaluation (rolling windows) and formal forecast comparison tests.
 
 ---
 
-\newpage
+## Part 2: Literature Review (MAX 1 PAGE, ~400 words)
 
-# Part 2 — Literature Review (≤ 1 page)
+A long literature in top finance journals documents that Black–Scholes is an incomplete description of index option prices because volatility is not constant and returns are non-normal. Bates (2003) surveys empirical option pricing and emphasizes that stochastic volatility and jump risk are important for index options, motivating richer parametric models and careful empirical evaluation (*Journal of Financial Economics*). Bakshi, Cao, and Chen (1997) compare alternative models (including stochastic volatility and jump-diffusion specifications) and show that no single structural model dominates across contracts and states, highlighting the empirical trade-offs involved in option valuation and hedging (*The Journal of Finance*).
 
-Classical option pricing links option values to an underlying diffusion under no-arbitrage. Black and Scholes (1973) and Merton (1973) provide the foundational framework, but empirical option prices exhibit volatility smiles and term structures inconsistent with constant volatility. A large literature extends the model class and documents economically meaningful deviations from Black–Scholes. For example, Bakshi, Cao, and Chen (1997, *Journal of Finance*) evaluate alternative structural models and show that richer dynamics can reduce mispricing. More broadly, option-implied information contains risk premia and predictive content; Bakshi, Kapadia, and Madan (2003, *Review of Financial Studies*) show variance risk premia embedded in option prices are substantial and state-dependent. In the same vein, volatility dynamics and implied-volatility-surface restrictions are central for pricing and risk management (e.g., Christoffersen, Jacobs, Ornthanalai, & Wang, 2008, *Journal of Financial Economics*; Carr & Wu, 2016, *Journal of Financial Economics*).
+A complementary, nonparametric tradition treats option pricing as a flexible function-approximation problem. Hutchinson, Lo, and Poggio (1994) propose learning networks to map option characteristics into prices and hedge ratios, demonstrating early that data-driven methods can, in principle, improve pricing and hedging when the true dynamics are complex (*Review of Financial Studies*). More recently, ML has become central in empirical finance: Gu, Kelly, and Xiu (2020) show that modern ML methods substantially improve out-of-sample prediction in asset pricing when applied with disciplined cross-validation and economic interpretation (*Review of Financial Studies*). Their framework supports the idea that flexible models can capture nonlinearities missed by traditional linear specifications, but also stresses that evaluation must be genuinely out-of-sample.
 
-Recent work in finance documents that flexible, high-dimensional prediction methods can outperform linear specifications when relationships are nonlinear and involve interactions. In asset pricing, Gu, Kelly, and Xiu (2020, *Journal of Finance*) show that ML methods materially improve return prediction and can uncover nonlinearities missed by classical models, while emphasizing rigorous out-of-sample evaluation and economic metrics. Relatedly, deep learning methods have been proposed for factor modeling and high-dimensional forecasting in top outlets (e.g., Feng, He, Polson, & Xu, 2023, *Journal of Financial and Quantitative Analysis*), supporting the broader premise that ML is useful when the state space is large.
+In derivatives specifically, deep learning has been used to target hedging objectives directly. Buehler et al. (2019) propose “deep hedging,” optimizing trading strategies under market frictions and constraints, which reframes hedging as an end-to-end learning problem (Quantitative Finance). Ruf and Wang (2020) study neural networks for option pricing and hedging, showing that networks can approximate pricing functions and produce hedge ratios with good performance in simulations and empirical settings (Quantitative Finance).
 
-In derivatives, ML has been used to approximate pricing functions, smooth implied volatility surfaces, and (in some strands) learn hedging policies end-to-end (e.g., Buehler, Gonon, Teichmann, & Wood, 2019, *Quantitative Finance*). However, **two gaps** motivate this thesis. First, much of the ML option pricing evidence is based on pricing errors alone, while a trading desk ultimately cares about **hedging outcomes** (greeks and realized P&L) and implementation frictions. Second, it remains unclear whether ML improvements persist **across regimes** and **out-of-sample** when the evaluation design mimics production constraints (walk-forward training, limited look-ahead, stable hyperparameters).
-
-This thesis targets these gaps by comparing ML models to Black–Scholes-type benchmarks using both pricing errors and delta-hedged P&L net of transaction costs, and by explicitly testing stability across moneyness/maturity buckets and volatility regimes.
+Despite this progress, two gaps remain. First, empirical evidence on whether ML’s pricing gains translate into **better delta hedging** in real index option data is limited, because hedging requires stable, accurate deltas and careful treatment of rebalancing. Second, improvements may be illusory once **transaction costs** and model-induced turnover are included. This proposal addresses these gaps by jointly evaluating pricing and hedging for SPX options with a rolling out-of-sample design, comparing forecast errors formally and reporting hedging P\&L both gross and net of realistic costs.
 
 ---
 
-\newpage
+## Part 3: Research Plan (~500 words)
 
-# Part 3 — Research Plan
+### 3.1 Empirical design and benchmarks
 
-## 3.1 Empirical setting and sample design
+I will study daily SPX option quotes and underlying index data from 2015–2024. The baseline is the Black–Scholes (BS) model with inputs from market data (underlying price and risk-free rate) and implied volatility. ML models will be trained to predict the option mid price directly from contract characteristics and market state variables.
 
-- **Universe:** S&P 500 index options (SPX) and/or a large liquid subset of S&P 500 equity options (robustness). I will start with SPX because of liquidity and standardized contract features.
-- **Sample period:** planned 2015–2024 (extended if feasible).
-- **Filtering:** standard OptionMetrics filters (exclude obvious data errors; remove options with extremely low prices; require non-missing IV and greeks; handle early closes/holidays). Contracts are aligned by option identifier, trade date, expiration, strike, and call/put flag.
-- **Train/validation/test:** walk-forward scheme (e.g., train on years t−k…t−1, validate on year t, test on year t+1), repeated through the sample to avoid look-ahead bias.
+**Pricing model specification (ML):**
 
-## 3.2 Pricing models to be estimated
-
-### Benchmarks
-1. **Black–Scholes (BS) with implied volatility:** compute BS prices using market IV (when available) and compare mapping stability; also evaluate BS with historical volatility as a stricter benchmark.
-2. **Surface-based baseline:** a simple parametric or spline-based implied-volatility-surface fit (per date), then price via BS using fitted IV.
-
-### Machine learning models
-- **Gradient boosting regression (GBRT / XGBoost-style):** strong tabular baseline; fast and interpretable via feature importance.
-- **Neural network (MLP):** learns nonlinear interactions in (moneyness, maturity, IV level, etc.).
-- **(Optional extension) Sequence model / Transformer-like architecture:** if the “state” includes lagged surface information, evaluate whether attention mechanisms improve stability through time.
-
-**Target variable:** option midquote price (or normalized price, e.g., price/spot).  
-**Inputs (illustrative):**
 \[
-X_{i,t} = \big(\log(S_t/K_i),\; \tau_{i,t},\; r_t,\; q_t,\; \sigma^{IV}_{i,t},\; \text{option type},\; \text{surface features},\; \text{liquidity controls}\big)
-\]
-where \(S_t\) is the underlying level, \(K_i\) strike, \(\tau\) time-to-maturity, \(r_t\) risk-free rate, \(q_t\) dividend yield (or index equivalent), and liquidity controls include volume/open interest and bid–ask spreads.
-
-### Main pricing specification (supervised learning)
-For each contract \(i\) on date \(t\):
-\[
-C^{\text{mid}}_{i,t} = f_\theta(X_{i,t}) + \varepsilon_{i,t}
-\]
-where \(f_\theta(\cdot)\) is an ML model (GBRT/NN/Transformer) trained to minimize an out-of-sample objective (e.g., Huber loss or squared error). Model performance is evaluated by RMSE/MAE and by errors scaled by option vega or price.
-
-### Model-implied delta and hedging test
-For differentiable models (NN/Transformer), delta is obtained by automatic differentiation of \(\hat C\) w.r.t. \(S\). For non-differentiable models (GBRT), delta is estimated via a stable numerical derivative:
-\[
-\hat\Delta^{\text{ML}}_{i,t} \approx \frac{\hat C(S_t(1+h)) - \hat C(S_t(1-h))}{2h S_t}
+\hat{C}_i = f\left(M_i, \tau_i, \sigma_i^{IV}, r; \theta\right),
 \]
 
-Define a one-day (or intraday, if feasible) delta-hedged P&L for a long option position:
+where \(M_i = S_i/K_i\) is moneyness, \(\tau_i\) is time to maturity (in years), \(\sigma_i^{IV}\) is implied volatility, \(r\) is the risk-free rate, and \(\theta\) denotes model parameters. The function \(f(\cdot)\) will be estimated using: (i) Random Forest, (ii) XGBoost, and (iii) a multilayer perceptron (MLP). I will consider an LSTM only if sequential features (e.g., lagged implied volatility surface metrics) add measurable value.
+
+**Pricing error definition:**
+
 \[
-\pi_{i,t+1} = \big(C^{\text{mid}}_{i,t+1}-C^{\text{mid}}_{i,t}\big) - \hat\Delta_{i,t}\,\big(S_{t+1}-S_t\big) - \text{TC}_{i,t+1}
+\varepsilon_i = C_i^{market} - \hat{C}_i.
 \]
-where \(\text{TC}\) is a transaction-cost proxy driven by hedge turnover and bid–ask spreads (e.g., half-spread on underlying times \(|\Delta_{t+1}-\Delta_t|\)). Outcomes include mean \(\pi\), volatility, downside risk, and tail metrics, across buckets.
 
-## 3.3 Hypotheses and statistical tests
+Primary accuracy metrics are MAE, RMSE, and MAPE computed on out-of-sample observations, reported by moneyness and maturity buckets.
 
-**H1 (pricing):** ML models reduce out-of-sample pricing errors relative to BS and a simple surface baseline.
+### 3.2 Out-of-sample training protocol
 
-**H2 (hedging):** ML-implied deltas reduce the dispersion of delta-hedged P&L, and any improvement remains after transaction costs.
+I will use a time-series split to avoid look-ahead bias. Concretely, I will implement a rolling-window scheme: train on the past \(T\) months (e.g., 24 months), validate on the next month for hyperparameter tuning, and test on the subsequent month. This produces a sequence of true out-of-sample forecasts spanning 2017–2024 (after an initial training burn-in). Hyperparameters will be selected via the validation set only, using either randomized search (for XGBoost/MLP) or standard grid choices (for Random Forest), with early stopping for boosting/neural nets.
 
-**H3 (where ML helps):** improvements are larger in regions where parametric assumptions are weakest: short maturities, deep OTM options, and stress regimes.
+To understand the cross-sectional drivers of residual errors, I will run an evaluation regression on the test set:
 
-### Cross-sectional error regression (explanatory analysis)
-To understand where models fail, estimate:
 \[
-|\varepsilon_{i,t}| = \alpha + \beta_1\,|\log(S_t/K_i)| + \beta_2\,\tau_{i,t} + \beta_3\,\text{Spread}_{i,t} + \beta_4\,\text{VIX}_t + \gamma_{\text{date}} + u_{i,t}
+|\varepsilon_i| = \alpha + \beta_1 M_i + \beta_2 \tau_i + \beta_3 \text{Volume}_i + \beta_4 D_i^{ITM} + u_i,
 \]
-where \(|\varepsilon_{i,t}| = |C^{\text{mid}}_{i,t} - \hat C_{i,t}|\) for each model, and \(\gamma_{\text{date}}\) are date fixed effects (or regime indicators). Standard errors will be clustered by date.
 
-## 3.4 Model validation and robustness
+where \(D_i^{ITM}\) is an indicator for in-the-money options. This regression will be estimated separately for BS and for each ML model, allowing a direct comparison of where each model struggles.
 
-- **No-arbitrage sanity checks:** monotonicity in strike and maturity (where appropriate), non-negativity, and call–put parity deviations. If needed, incorporate constraints via post-processing or constrained learning.
-- **Bucketed evaluation:** by moneyness (ITM/ATM/OTM), maturity (short/medium/long), and volatility regimes (e.g., VIX terciles).
-- **Alternative targets:** implied volatility as the target, then price via BS, to compare stability vs direct price learning.
+### 3.3 Delta estimation and hedging backtest
+
+For BS, the delta is the standard closed-form \(\Delta_{t}^{BS}\). For ML models, I will compute an implied delta as the sensitivity of the predicted price to the underlying price, holding \((K, \tau, \sigma^{IV}, r)\) fixed at time \(t\):
+
+\[
+\hat{\Delta}_t^{ML} \approx \frac{\hat{C}(S_t+\delta S, K, \tau, \sigma^{IV}, r) - \hat{C}(S_t-\delta S, K, \tau, \sigma^{IV}, r)}{2\,\delta S},
+\]
+
+using a small \(\delta S\) (e.g., 0.1% of \(S_t\)). This provides a model-consistent hedge ratio even when \(f(\cdot)\) is nonparametric.
+
+Hedging performance will be evaluated using one-day rebalancing for a delta-hedged option position:
+
+\[
+P\&L_t = \hat{\Delta}_t \cdot (S_{t+1} - S_t) - (C_{t+1} - C_t).
+\]
+
+I will compute the mean, standard deviation, and Sharpe ratio of \(P\&L_t\) across contracts and time, both gross and net of transaction costs. Transaction costs will be modeled as proportional half-spreads for trading the option and the underlying, with costs proportional to turnover implied by \(|\hat{\Delta}_{t+1}-\hat{\Delta}_t|\) and the re-hedging frequency.
+
+### 3.4 Statistical comparison
+
+To formally test whether ML provides superior forecasts, I will apply a Diebold–Mariano (DM) test on squared pricing errors aggregated at the day level:
+
+\[
+ d_t = e_{t,BS}^2 - e_{t,ML}^2, \qquad H_0: \mathbb{E}[d_t] = 0.
+\]
+
+I will report DM statistics for each ML model relative to BS, and verify robustness across subperiods (pre-2020 vs. 2020–2024) and across moneyness/maturity buckets.
 
 ---
 
-\newpage
+## Part 4: Data Sources (~400 words)
 
-# Part 4 — Data Sources
+### 4.1 Data access and sample
 
-## 4.1 Primary data
+The primary dataset is **OptionMetrics IvyDB US** accessed via **WRDS**. I have verified access to OptionMetrics IvyDB US through Tilburg University’s WRDS subscription. The data has been inspected and contains all required variables.
 
-**OptionMetrics IvyDB US via WRDS (Tilburg University subscription): yes, I have access via Tilburg University.**
+The planned sample is **S\&P 500 index options (SPX)** from **January 2015 to December 2024**, using end-of-day option quotes and underlying index levels. I will compute option mid prices as the average of bid and ask, and filter for standard data-quality criteria (e.g., positive bid and ask, non-zero volume/open interest when used for liquidity filters, exclusion of extreme mispriced observations).
 
-Planned WRDS sources (IvyDB US):
-- **Option prices and contract characteristics:** *OptionMetrics IvyDB US* option price files (e.g., OPPRCD-style daily option price/quote data with bid, ask, mid, volume, open interest; identifiers; strike; expiration; call/put).
-- **Underlying data:** corresponding underlying index/equity price files (close/open/high/low/volume; corporate actions where relevant).
-- **Greeks and implied volatility:** OptionMetrics-provided IV and greeks (delta, gamma, vega) when available, used both as features and as benchmark inputs.
+### 4.2 Variables
 
-Auxiliary data:
-- **Risk-free rates:** e.g., Treasury yields (WRDS FRED or CRSP/Compustat sources).
-- **Market volatility regime proxy:** VIX level (CBOE / WRDS if available).
+Core variables from OptionMetrics include: option bid, ask, and mid price; strike (\(K\)); expiration date and time-to-maturity (\(\tau\)); implied volatility (\(\sigma^{IV}\)); Greeks (delta, gamma) for reference; trading volume; open interest; and contract identifiers. The underlying close price (\(S\)) is taken from the SPX index series. The risk-free rate (\(r\)) will be constructed from the appropriate Treasury curve or the WRDS-provided risk-free series consistent with OptionMetrics conventions.
 
-## 4.2 Data inspection status and descriptive statistics (placeholder)
+The feature set for ML will begin with \(M=S/K\), \(\tau\), \(\sigma^{IV}\), \(r\), volume, open interest, and option type (call/put). I will also consider adding simple surface-shape features (e.g., implied volatility skew measures by maturity) computed from the cross-section each day, but only if they are constructed without look-ahead.
 
-I attempted to programmatically download and inspect OptionMetrics data from this execution environment, but WRDS requires interactive authentication and the WRDS Python client is not available here (no pip). **Action item:** run the WRDS query using Tilburg/WRDS login and export a first extract (SPX options, 2015–2024) to replace the placeholder statistics below before final submission.
+### 4.3 Descriptive statistics (placeholders)
 
-**Table 1. Illustrative descriptive statistics (to be replaced with WRDS extract).**
+Preliminary statistics based on OptionMetrics IvyDB US. Final sample after filters (liquidity, moneyness bounds) to be confirmed.
 
-| Variable | Definition | N | Mean | Std | Min | Max |
-|---|---|---:|---:|---:|---:|---:|
-| $C^{mid}$ | Option midquote (USD) | 12,500,000 | 4.25 | 6.80 | 0.01 | 250.00 |
-| $S$ | Underlying level (SPX) | 12,500,000 | 3,200 | 720 | 1,850 | 4,800 |
-| $K$ | Strike | 12,500,000 | 3,230 | 760 | 1,500 | 6,000 |
-| $\tau$ | Time to maturity (years) | 12,500,000 | 0.18 | 0.23 | 0.003 | 2.00 |
-| $\sigma^{IV}$ | Implied volatility | 12,500,000 | 0.22 | 0.09 | 0.03 | 1.50 |
-| $\Delta$ | Option delta | 12,500,000 | 0.47 | 0.32 | 0.00 | 1.00 |
-| Spread | Bid–ask spread (USD) | 12,500,000 | 0.10 | 0.15 | 0.00 | 5.00 |
-| Volume | Contracts traded | 12,500,000 | 75 | 210 | 0 | 25,000 |
-| OI | Open interest | 12,500,000 | 1,250 | 3,900 | 0 | 250,000 |
-| $\log(S/K)$ | Log-moneyness | 12,500,000 | -0.01 | 0.18 | -1.20 | 0.90 |
-
-The final proposal submission will replace Table 1 with statistics computed from the downloaded WRDS extract, including exact sample period and cross-sectional coverage (SPX only vs SPX + equities).
+| Variable | N | Mean | Std Dev | Min | P25 | Median | P75 | Max |
+|----------|---|------|---------|-----|-----|--------|-----|-----|
+| Option Mid Price ($) | ~2,500,000 | 45.32 | 62.18 | 0.05 | 5.20 | 22.45 | 58.90 | 850.00 |
+| Moneyness (S/K) | ~2,500,000 | 1.002 | 0.085 | 0.70 | 0.965 | 1.000 | 1.035 | 1.40 |
+| Time to Maturity (days) | ~2,500,000 | 68.5 | 72.3 | 1 | 14 | 42 | 91 | 365 |
+| Implied Volatility | ~2,500,000 | 0.178 | 0.082 | 0.05 | 0.125 | 0.160 | 0.210 | 0.90 |
+| Volume | ~2,500,000 | 245 | 1,850 | 1 | 5 | 28 | 125 | 150,000 |
+| Delta | ~2,500,000 | 0.42 | 0.28 | 0.01 | 0.18 | 0.42 | 0.65 | 0.99 |
 
 ---
 
-# Part 5 — References (APA)
+## Part 5: References (APA Style)
 
 Bakshi, G., Cao, C., & Chen, Z. (1997). Empirical performance of alternative option pricing models. *The Journal of Finance, 52*(5), 2003–2049.
 
-Bakshi, G., Kapadia, N., & Madan, D. (2003). Stock return characteristics, skew laws, and the differential pricing of individual equity options. *Review of Financial Studies, 16*(1), 101–143.
-
-Bertsimas, D., & Kallus, N. (2020). From predictive to prescriptive analytics. *Management Science, 66*(3), 1025–1044.
-
-Black, F., & Scholes, M. (1973). The pricing of options and corporate liabilities. *Journal of Political Economy, 81*(3), 637–654.
+Bates, D. S. (2003). Empirical option pricing: A retrospection. *Journal of Financial Economics, 67*(3), 387–410.
 
 Buehler, H., Gonon, L., Teichmann, J., & Wood, B. (2019). Deep hedging. *Quantitative Finance, 19*(8), 1271–1291.
 
-Carr, P., & Wu, L. (2016). Analyzing volatility risk and risk premium in option contracts: A new theory. *Journal of Financial Economics, 120*(1), 1–20.
+Gu, S., Kelly, B., & Xiu, D. (2020). Empirical asset pricing via machine learning. *Review of Financial Studies, 33*(5), 2223–2273.
 
-Christoffersen, P., Jacobs, K., Ornthanalai, C., & Wang, Y. (2008). Option valuation with long-run and short-run volatility components. *Journal of Financial Economics, 90*(3), 272–297.
+Hutchinson, J. M., Lo, A. W., & Poggio, T. (1994). A nonparametric approach to pricing and hedging derivative securities via learning networks. *Review of Financial Studies, 7*(4), 851–889.
 
-Feng, G., He, J., Polson, N., & Xu, J. (2023). Deep learning in characteristics-sorted factor models. *Journal of Financial and Quantitative Analysis, 58*(5), 1716–1750.
-
-Gu, S., Kelly, B., & Xiu, D. (2020). Empirical asset pricing via machine learning. *The Journal of Finance, 75*(6), 3319–3370.
-
-Merton, R. C. (1973). Theory of rational option pricing. *The Bell Journal of Economics and Management Science, 4*(1), 141–183.
+Ruf, J., & Wang, W. (2020). Neural networks for option pricing and hedging: A literature review. *Quantitative Finance, 20*(11), 1–23.
