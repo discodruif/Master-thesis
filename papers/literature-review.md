@@ -279,3 +279,33 @@
 - Provides a reproducible DRL framework, market environments, and benchmark agents for trading.
 - Emphasizes end-to-end pipelines (data → environment → agent → evaluation) with risk-aware metrics.
 **Relevance to My Thesis:** Strong, widely cited foundation for ML/RL algorithmic trading experiments and evaluation design (baselines, metrics, train/test splits).
+---
+### "Deep neural network framework based on backward stochastic differential equations for pricing and hedging American options in high dimensions"
+**Authors:** Y. Chen, J. W. L. Wan
+**Year:** 2021
+**Source:** Quantitative Finance (Taylor & Francis)
+**Link:** [Read](https://www.tandfonline.com/doi/abs/10.1080/14697688.2020.1788219)
+**Key Findings:**
+- Solves high-dimensional American option pricing/hedging via deep BSDE methods.
+- Demonstrates scalability and accuracy improvements for problems where grid/PDE methods break down.
+**Relevance to My Thesis:** Methodologically important bridge between stochastic calculus (BSDEs) and deep learning; directly relevant to high-dimensional derivative pricing.
+---
+### "Accelerated American option pricing with deep neural networks"
+**Authors:** D. Anderson, U. Ulrych
+**Year:** 2023
+**Source:** SSRN / Quantitative Finance and Economics
+**Link:** [Read](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4000756)
+**Key Findings:**
+- Proposes neural architectures to accelerate American option valuation versus standard LSM/MC implementations.
+- Reports speed/accuracy trade-offs relevant for practical deployment.
+**Relevance to My Thesis:** Useful practical reference for why ML methods can be preferable in production-like settings (latency, scalability) while still benchmarking against classical methods.
+---
+### "Pricing cryptocurrency options with machine learning regression for handling market volatility"
+**Authors:** Alessio Brini, Jim Lenz
+**Year:** 2024
+**Source:** Semantic Scholar
+**Link:** [Read](https://www.semanticscholar.org/paper/8544d6a11ee56064c8772707493518a7dacb6604)
+**Key Findings:**
+- Applies supervised ML regression to option pricing in a highly volatile crypto-derivatives setting.
+- Highlights feature/volatility handling as a key driver of pricing performance.
+**Relevance to My Thesis:** Provides an out-of-sample stress test setting (crypto volatility) to discuss robustness/generalization of ML option pricing models.
