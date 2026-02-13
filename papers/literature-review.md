@@ -309,3 +309,43 @@
 - Applies supervised ML regression to option pricing in a highly volatile crypto-derivatives setting.
 - Highlights feature/volatility handling as a key driver of pricing performance.
 **Relevance to My Thesis:** Provides an out-of-sample stress test setting (crypto volatility) to discuss robustness/generalization of ML option pricing models.
+---
+### "Applying Informer for Option Pricing: A Transformer-Based Approach"
+**Authors:** Not specified (see arXiv)
+**Year:** 2025
+**Source:** arXiv
+**Link:** [Read](https://arxiv.org/abs/2506.05565)
+**Key Findings:**
+- Uses a Transformer (Informer) architecture tailored for long-sequence forecasting to model option pricing inputs/targets.
+- Demonstrates that attention-based sequence models can capture temporal dependencies relevant for pricing dynamics.
+**Relevance to My Thesis:** Directly supports exploring Transformer architectures for derivatives pricing; motivates comparing Transformers vs MLP/LSTM/GBM baselines.
+---
+### "Option pricing under non-Markovian stochastic volatility models: A deep signature approach"
+**Authors:** Not specified (see arXiv)
+**Year:** 2025
+**Source:** arXiv
+**Link:** [Read](https://arxiv.org/abs/2508.15237)
+**Key Findings:**
+- Applies signature-based deep learning to represent non-Markovian path information for option pricing.
+- Targets settings where the latent volatility process has memory, challenging standard Markovian models.
+**Relevance to My Thesis:** Strong example of ML adding value exactly where classical parametric models struggle (path-dependence / memory), useful for positioning novelty and literature gaps.
+---
+### "KANHedge: Efficient Hedging of High-Dimensional Options Using Kolmogorov-Arnold Network-Based BSDE Solver"
+**Authors:** Not specified (see arXiv)
+**Year:** 2026
+**Source:** arXiv
+**Link:** [Read](https://arxiv.org/abs/2601.11097)
+**Key Findings:**
+- Replaces standard MLP components in deep-BSDE hedgers with Kolmogorov-Arnold Networks (KANs) to improve function approximation.
+- Reports improved hedging performance for high-dimensional options versus MLP-based baselines.
+**Relevance to My Thesis:** Very recent method upgrade on deep-BSDE pricing/hedging; good for the “state of the art” and for motivating model architecture choices beyond vanilla MLPs.
+---
+### "Multi-Agent Reinforcement Learning for High-Frequency Trading Strategy Optimization"
+**Authors:** Ming Wei, Shikai Wang, Yanli Pu, Jiang Wu
+**Year:** 2024
+**Source:** Semantic Scholar
+**Link:** [Read](https://www.semanticscholar.org/paper/6ea9a11fcea9cc5b0c651e2ad473dcb62648709e)
+**Key Findings:**
+- Uses multi-agent RL to coordinate trading decisions in high-frequency settings.
+- Emphasizes interaction effects and stability issues absent in single-agent formulations.
+**Relevance to My Thesis:** Useful reference if the thesis includes algorithmic trading strategy learning; highlights practical RL complications (multi-agent dynamics, stability, evaluation) in market microstructure contexts.
