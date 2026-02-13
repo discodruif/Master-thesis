@@ -1,102 +1,93 @@
-# Master Thesis Proposal
+# Master Thesis Proposal (Updated) — 2026-02-13
 
 ## Working Title
-**"Robust Machine Learning for Option Pricing & Hedging (and How It Translates into Tradable Signals)"**
+**Machine Learning for Options Pricing and ML-Informed Algorithmic Trading: Volatility Surfaces, Early-Exercise Features, and Hedging Performance**
 
-## 1) Motivation
-Option pricing sits at the intersection of financial theory (no-arbitrage, stochastic volatility, PDE/BSDE formulations) and real-world market frictions (microstructure noise, liquidity, transaction costs, regime shifts). Recent literature shows that ML can match or outperform classical parametric models (e.g., Black–Scholes / Heston) in pricing accuracy, and deep learning can scale to high-dimensional American-style problems where traditional PDE methods are infeasible.
-
-However, the literature still has practical gaps:
-- Many papers focus on pricing error but do not evaluate *hedging performance* (P&L) under realistic costs.
-- Model comparisons are often not standardized (different datasets, metrics, and splits), making it hard to conclude what works best out-of-sample.
-- New model classes (Transformers for sequences, signature models for path-dependence, KAN-based networks) are emerging but are not yet consistently benchmarked against established baselines.
-
-## 2) Refined Research Question
+## Refined Research Question (gap-driven)
 **Primary RQ:**
-> To what extent do modern ML models (tree ensembles, deep networks, and sequence/path models) improve *out-of-sample option pricing and hedging performance* relative to classical option pricing benchmarks, and can the resulting mispricing estimates be converted into *economically meaningful* trading signals after transaction costs?
+How can modern ML models (deep learning + gradient boosting + physics/finance-informed constraints) be used to **(i)** learn arbitrage-aware option pricing maps and implied-volatility surfaces and **(ii)** improve **out-of-sample hedging and trading performance** compared with classical models?
 
 **Sub-questions:**
-1. Which model families deliver the best trade-off between accuracy, stability across regimes, and computational efficiency?
-2. Does improved pricing accuracy translate into improved hedging performance (e.g., delta-hedged P&L, tail risk)?
-3. Can model-implied mispricing be used to construct robust delta-neutral trading strategies that survive realistic frictions?
+1. **Surface/price learning:** Which model classes (e.g., deep smoothing/vol-surface networks, gated networks, PINNs, boosted trees) best approximate option prices / implied volatility surfaces under realistic market noise?
+2. **Early exercise:** To what extent do deep optimal-stopping / recurrent methods improve American-style option pricing accuracy and exercise-boundary estimation versus traditional benchmarks?
+3. **Hedging utility:** Do ML-based prices and Greeks translate into superior hedging P&L (after transaction costs) versus Black–Scholes / stochastic-vol baselines?
+4. **Trading utility:** Can volatility-surface forecasts or option-implied representations improve downstream trading decisions (supervised signals and/or RL trading agents) without overfitting?
 
-## 3) Literature Review Summary (Grouped by Theme)
+**Key literature gaps motivating the RQ:**
+- Many papers demonstrate strong in-sample pricing accuracy, but fewer evaluate **end-to-end economic value** (hedging P&L, transaction costs, stability under regime shifts).
+- Volatility surface learning is powerful (deep smoothing, rough-vol calibration surrogates) but needs clearer comparison of **arbitrage constraints, calibration speed, and downstream performance**.
+- American-style options remain challenging at scale; recent deep learning methods offer promise, but robust, reproducible comparisons across products/horizons are still limited.
 
-### A) ML option pricing (supervised learning baselines)
-- **Regression/Ensembles/Boosting:** Multiple studies compare ML regressors (RF, XGBoost/CatBoost, NN) with Black–Scholes/Heston and report improved fit under volatile conditions. These motivate a strong baseline set (linear/GBM/tree ensemble).
-- **Architecture sensitivity:** Work on option pricing network architectures highlights that performance depends materially on design choices and regularization—so the thesis should standardize training and validation protocols.
+---
+## Literature Review Summary (grouped by theme)
 
-### B) American options & high-dimensional pricing via deep learning
-- **Deep learning for American-style options:** Becker–Cheridito–Jentzen (2020) demonstrates deep learning approaches that scale better than classical LSM in higher dimensions.
-- **Deep BSDE methods:** Chen & Wan (2021) show pricing and hedging of American options through BSDE-inspired deep networks, a key bridge between theory and ML.
-- **Acceleration & practicality:** Anderson & Ulrych (2023) emphasize speed/latency and implementation considerations—important if the thesis also includes tradable signal construction.
+### Theme A — ML for option pricing (function approximation)
+- **Network architecture comparisons for option pricing (2023, arXiv)** show that architecture choice materially impacts error and training efficiency.
+- **Traditional ML baselines (RF/XGBoost/CatBoost)** appear competitive on certain datasets, motivating careful baseline selection and evaluation beyond neural nets.
+- **Physics-informed neural networks for option pricing** highlight the value of embedding known structure (e.g., PDE residuals / constraints) to improve generalization.
 
-### C) Hedging as a learning problem
-- **Deep Hedging:** Buehler et al. formulate hedging as a sequential learning problem, enabling end-to-end learned hedging strategies under frictions. This shifts evaluation from “pricing RMSE” to “economic hedging outcomes.”
-- **Newer architectures:** Very recent work (e.g., KANHedge, 2026) suggests architectural improvements within deep-BSDE hedgers that could materially affect hedging performance.
+### Theme B — Implied volatility surface modeling, smoothing, and calibration
+- **Deep smoothing of IV surfaces (NeurIPS 2020)** proposes data-driven smoothing methods suited for noisy, sparse option grids—useful as a stable representation.
+- **Deep learning volatility & calibration in (rough) volatility models (Quantitative Finance 2021)** demonstrates neural surrogates for fast pricing and calibration across model families.
+- **Forecasting IV surfaces (Journal of Futures Markets 2022)** and **representation learning from IV surfaces (SSRN 2023)** link surfaces to predictive signals, motivating a combined pricing + forecasting + trading pipeline.
+- **Gated DNNs for IV surfaces (arXiv 2019)** provide architecture-level inductive biases tailored to surface dynamics.
 
-### D) Sequence/path-dependent models (Transformers, signatures)
-- **Transformers for option pricing:** Recent arXiv work explores Transformer variants (e.g., Informer) to capture long-range dependencies in financial sequences, potentially improving robustness for time-varying dynamics.
-- **Deep signature approach for non-Markovian volatility:** Signature-based deep models target memory and path dependence, where standard Markovian models struggle.
+### Theme C — American options, optimal stopping, and hedging
+- **Pricing and hedging American-style options with deep learning (JRFM 2020)** provides a scalable deep optimal-stopping approach with hedging evaluation.
+- **Recent work on accelerated American pricing (SSRN 2023)** and **deep recurrent networks for high-dimensional American options (Quantitative Finance 2023)** stresses computational feasibility, path dependence, and joint pricing/hedging criteria.
 
-### E) Algorithmic trading & reinforcement learning (execution → evaluation)
-- **Benchmarking RL in trading:** FinRL provides widely used RL environments and evaluation practices, reducing “backtest overfitting” risk through more standardized pipelines.
-- **Multi-agent RL for HFT:** Recent work highlights stability, interaction effects, and evaluation pitfalls for RL in microstructure settings.
+### Theme D — ML/RL for algorithmic trading and market microstructure
+- **Deep RL for trading (2019, arXiv)** is a foundational reference for reward design, risk scaling, and evaluation pitfalls.
+- **Deep Q-learning for commodity futures trading (ESWA 2024)** provides a practical RL trading system design on futures data.
+- **Deep limit order book forecasting (2024)** connects microstructure modeling to short-horizon price moves, relevant for signal generation and execution-aware evaluation.
 
-**Synthesis:** The literature supports that ML can improve option pricing, but the key gap is translating accuracy gains into *hedging* and *economic value* under frictions. A thesis contribution can be a clean benchmark study that evaluates both pricing and hedging outcomes, and then tests whether mispricing signals remain profitable after costs.
+### Theme E — Supporting methods and broader context
+- **GANs in finance (2021)** motivate synthetic data augmentation and stress-testing.
+- **Federated learning in financial systems** informs privacy-aware training setups (optional extension).
+- **Bayesian derivatives pricing (high volatility)** motivates uncertainty quantification and calibration confidence intervals.
 
-## 4) Proposed Methodology
+---
+## Proposed Methodology (concrete and testable)
 
-### 4.1 Data
-Planned datasets (choose based on availability via Tilburg access):
-- Equity options dataset (e.g., OptionMetrics / exchange dataset) with bid/ask, maturities, strikes, volumes, implied vol.
-- Underlying returns, realized volatility measures, rates/dividends.
+### 1) Data
+- **Options data:** liquid equity index options (e.g., SPX) or a highly liquid equity options universe; extract option chains across maturities/strikes.
+- **Underlying + rates/dividends:** underlying price, realized volatility proxies, term structure inputs.
+- **Preprocessing:** construct implied vols, standardized moneyness, time-to-maturity, ensure data cleaning (stale quotes, arbitrage checks).
 
-Preprocessing:
-- Standardize moneyness, time-to-maturity, and other features.
-- Filter illiquid quotes; use mid prices but track bid/ask to model transaction costs.
-- Time-based splits (train/validation/test by date) to avoid leakage.
+### 2) Baselines
+- Black–Scholes (with historical/IV inputs) and at least one stochastic volatility benchmark (e.g., Heston) where feasible.
+- Classical ML baselines: XGBoost / Random Forest for prices or implied vols.
 
-### 4.2 Models to Benchmark
-**Classical baselines:** Black–Scholes (with implied vol), Heston (calibrated), and potentially COS/FFT-style benchmarks where feasible.
+### 3) ML models to implement/compare
+- **IV-surface models:** deep smoothing/NN surface parameterizations; gated architectures; optional monotonicity/convexity penalties.
+- **Direct option price models:** feed-forward nets + regularization; physics/finance-informed constraints (PDE residual or no-arbitrage penalties).
+- **American options:** deep optimal stopping / continuation-value networks; recurrent architectures for path dependence.
 
-**ML baselines:**
-- Linear regression / splines (sanity check)
-- Random Forest / XGBoost
-- MLP (feed-forward NN)
+### 4) Evaluation metrics (beyond RMSE)
+- **Pricing accuracy:** RMSE/MAE on prices and implied vols across buckets (moneyness, maturity).
+- **No-arbitrage diagnostics:** calendar spread / butterfly violations; monotonicity constraints; surface smoothness.
+- **Calibration/inference speed:** runtime comparisons for calibration/surface generation.
+- **Hedging backtests:** delta-hedging / vega-hedging P&L distributions, turnover, transaction costs.
+- **Trading backtests (optional but targeted):**
+  - Supervised signals using IV-surface forecasts/embeddings (e.g., predicting volatility risk premium proxies).
+  - RL agent (e.g., DQN-style) using option-implied state; compare to rule-based baselines.
 
-**Advanced models (one or two, depending on scope):**
-- Transformer (Informer-style) for sequence-aware features
-- Deep-BSDE hedging model OR a constrained model (e.g., physics-informed / no-arbitrage regularization)
+### 5) Robustness & reproducibility
+- Train/validation/test split by time (avoid leakage), regime-based analysis, ablations on features and constraints.
+- Sensitivity analysis for transaction costs, liquidity filters, and re-hedging frequency.
 
-### 4.3 Evaluation
-**Pricing metrics:** RMSE/MAE by moneyness and maturity buckets; stability across regimes; calibration error relative to implied vol surface.
+---
+## Expected Results / Contributions
+- A **structured comparison** of ML approaches for option pricing and IV surface modeling with explicit no-arbitrage and economic-value evaluation.
+- Evidence on whether improved pricing metrics **translate into** better hedging P&L and/or trading outcomes.
+- Practical guidance on model design choices (architecture, constraints, features) and on evaluation pitfalls in financial ML.
 
-**Hedging metrics:**
-- Delta-hedged P&L distributions (mean, volatility, drawdown, tail risk)
-- Transaction cost–adjusted hedging performance
-- Stress tests (high-volatility periods)
-
-**Economic value / trading signal test (optional but targeted):**
-- Construct delta-neutral mispricing portfolios: go long “underpriced” options, short “overpriced,” hedged with underlying.
-- Include bid/ask spreads, slippage, and position limits.
-- Evaluate net Sharpe, turnover, and robustness across periods.
-
-### 4.4 Reproducibility
-- Fixed data splits and a single evaluation harness.
-- Ablations: feature sets, model size, and regularization.
-- Clear reporting of compute/time cost for each method.
-
-## 5) Expected Results & Contributions
-- A rigorous, apples-to-apples comparison of classical vs ML option pricing models on the same dataset.
-- Evidence on whether pricing accuracy improvements translate into better hedging performance.
-- A practical assessment of whether ML-derived mispricing signals remain profitable after realistic costs.
-- A structured thesis narrative that connects option pricing theory (PDE/BSDE/no-arbitrage) with modern ML architectures.
-
-## 6) Updated Timeline (UTC)
-- **Feb 13–19:** Expand literature review; finalize dataset choice + data access.
-- **Feb 20–25:** Implement data pipeline + baseline models; establish evaluation harness.
-- **Feb 26–Mar 3:** Train/validate ML models; run robustness checks.
-- **Mar 4–Mar 10:** Hedging and trading-signal backtests; transaction cost modeling.
-- **Mar 11–Mar 20:** Write-up (methods, results, discussion); finalize figures/tables.
-- **Mar 21–Mar 25:** Revision cycle; finalize submission package.
+---
+## Updated Timeline (realistic, milestone-based)
+- **Feb 13–Feb 20:** finalize literature review synthesis; lock dataset choice; define evaluation protocol.
+- **Feb 21–Mar 06:** data ingestion/cleaning; implement baselines (BS, Heston if feasible; XGBoost/RF).
+- **Mar 07–Mar 27:** implement IV-surface models + direct pricing networks; run pricing/no-arb evaluations.
+- **Mar 28–Apr 17:** implement American option deep learning (optimal stopping / recurrent); evaluate.
+- **Apr 18–May 09:** hedging backtests; cost/turnover robustness.
+- **May 10–May 31:** optional trading experiments (supervised + RL) if time permits.
+- **Jun 01–Jun 20:** write-up, results consolidation, revisions, final submission preparation.
