@@ -300,6 +300,16 @@
 - Reports speed/accuracy trade-offs relevant for practical deployment.
 **Relevance to My Thesis:** Useful practical reference for why ML methods can be preferable in production-like settings (latency, scalability) while still benchmarking against classical methods.
 ---
+### "Efficient pricing and hedging of high-dimensional American options using deep recurrent networks"
+**Authors:** A. S. Na, J. W. L. Wan
+**Year:** 2023
+**Source:** Quantitative Finance
+**Link:** [Read](https://www.tandfonline.com/doi/abs/10.1080/14697688.2023.2167666)
+**Key Findings:**
+- Introduces deep recurrent architectures to handle path-dependence and high-dimensional state representations in American option pricing.
+- Provides joint pricing-and-hedging evaluation, emphasizing out-of-sample performance.
+**Relevance to My Thesis:** Connects sequence modeling (RNN-style) with American-style optimal stopping and hedging—useful for designing model classes beyond feed-forward networks.
+---
 ### "Pricing cryptocurrency options with machine learning regression for handling market volatility"
 **Authors:** Alessio Brini, Jim Lenz
 **Year:** 2024
