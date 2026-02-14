@@ -533,3 +533,27 @@
 - Uses IV term structure, skew, realized volatility, and macro variables as state (not as a pricing engine) to learn an overlay hedging policy.
 - Reports improved risk-adjusted performance vs baselines with controlled turnover; discusses statistical uncertainty and practical deployment considerations.
 **Relevance to My Thesis:** High-quality template for an empirical RL hedging study with realistic constraints; informs how to structure backtests, cost models, and evaluation beyond raw P&L.
+
+---
+### Deep Learning Option Pricing with Market Implied Volatility Surfaces
+**Authors:** Lijie Ding, Egang Lu, Kin Cheung
+**Year:** 2025
+**Source:** arXiv (via Semantic Scholar)
+**Link:** https://arxiv.org/abs/2509.05911
+**Key Findings:**
+- Proposes a deep learning framework that leverages the market-implied volatility surface as a key state/input to option pricing.
+- Aims to unify volatility-surface representation and pricing for fast valuation (including more complex/exotic payoffs) relative to traditional numerical methods.
+- Highlights flexibility for adapting across maturities/strikes and changing market regimes.
+**Relevance to My Thesis:** Supports a “surface-first” thesis angle: model the IV surface (or learn directly from it) and evaluate pricing and hedging implications versus classical models.
+
+---
+### Simultaneous upper and lower bounds of American-style option prices with hedging via neural networks
+**Authors:** Ivan Guo, Nicolas Langrené, Jiahao Wu
+**Year:** 2023
+**Source:** arXiv (via Semantic Scholar)
+**Link:** https://arxiv.org/abs/2302.12439
+**Key Findings:**
+- Uses neural networks to compute both lower and upper bounds for American option prices without nested Monte Carlo.
+- Produces hedging strategies alongside bounds, connecting pricing uncertainty with risk management.
+- Provides a scalable approach for high-dimensional early-exercise problems.
+**Relevance to My Thesis:** Strong reference for an American option pricing proposal and for framing ML methods as producing economically meaningful bounds and hedges (not just point estimates).
