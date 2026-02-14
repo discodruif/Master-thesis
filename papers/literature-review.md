@@ -437,3 +437,39 @@
 - Emphasizes interaction effects and stability issues absent in single-agent formulations.
 **Relevance to My Thesis:** Useful reference if the thesis includes algorithmic trading strategy learning; highlights practical RL complications (multi-agent dynamics, stability, evaluation) in market microstructure contexts.
 
+
+---
+### Gated Neural Networks for Option Pricing: Rationality by Design
+**Authors:** Yongxin Yang, Yu Zheng, Timothy M. Hospedales
+**Year:** 2016
+**Source:** Semantic Scholar
+**Link:** https://www.semanticscholar.org/paper/94368b2b32687b3d7c875ccd914b6fc5478e4e30
+**Key Findings:**
+- Proposes a gated neural network architecture for option pricing that encodes economically motivated structure (“rationality by design”) rather than treating pricing as a pure black box.
+- Demonstrates improved generalization compared to standard feed-forward networks when mapping option characteristics to prices.
+- Highlights that architectural inductive biases can reduce data needs and improve stability in out-of-sample pricing.
+**Relevance to My Thesis:** Useful blueprint for building ML option-pricing models with built-in economic structure (e.g., monotonicity/shape constraints), which is directly relevant when comparing ML pricing/hedging performance to Black–Scholes-type benchmarks.
+
+---
+### Gamma and vega hedging using deep distributional reinforcement learning
+**Authors:** (see paper)
+**Year:** 2022
+**Source:** Semantic Scholar
+**Link:** https://www.semanticscholar.org/paper/4c63447559f6380b2d05776efc3c56d155439f9e
+**Key Findings:**
+- Frames multi-greek hedging (gamma/vega) as a sequential decision problem and applies distributional RL to learn hedging policies.
+- Optimizes the full distribution of hedging outcomes rather than only expected P&L, aligning with risk-management objectives.
+- Provides evidence that learned policies can reduce tail losses relative to heuristic hedging rules under realistic frictions.
+**Relevance to My Thesis:** Directly supports a thesis angle on RL-based dynamic hedging and on risk-sensitive objectives (e.g., CVaR) when transaction costs and model uncertainty matter.
+
+---
+### Arbitrage-Free Neural-SDE Market Models
+**Authors:** (see paper)
+**Year:** 2021
+**Source:** Semantic Scholar
+**Link:** https://www.semanticscholar.org/paper/fe8ee175ae0037ecfc987b35439475e3402b8728
+**Key Findings:**
+- Introduces neural stochastic differential equation (Neural-SDE) market models designed to satisfy no-arbitrage conditions.
+- Combines flexible function approximation (deep learning) with continuous-time dynamics, enabling more realistic path-wise behavior.
+- Suggests a route to model implied-vol dynamics while maintaining financial consistency constraints.
+**Relevance to My Thesis:** Strong reference for “ML + no-arbitrage constraints” proposals (e.g., arbitrage-free IV surface modeling and downstream pricing/hedging).
