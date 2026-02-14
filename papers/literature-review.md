@@ -473,3 +473,39 @@
 - Combines flexible function approximation (deep learning) with continuous-time dynamics, enabling more realistic path-wise behavior.
 - Suggests a route to model implied-vol dynamics while maintaining financial consistency constraints.
 **Relevance to My Thesis:** Strong reference for “ML + no-arbitrage constraints” proposals (e.g., arbitrage-free IV surface modeling and downstream pricing/hedging).
+
+---
+### Operator Deep Smoothing for Implied Volatility
+**Authors:** Ruben Wiedemann, Antoine Jacquier, Lukas Gonon
+**Year:** 2024
+**Source:** arXiv (via Semantic Scholar)
+**Link:** https://arxiv.org/abs/2406.11520
+**Key Findings:**
+- Introduces a neural-operator approach (“operator deep smoothing”) to map sparse/noisy option observations to a smooth implied-volatility surface.
+- Trains a single model on long-horizon raw intraday SPX option data, reducing the need for heavy per-day preprocessing.
+- Enforces critical no-arbitrage constraints and shows robustness to subsampling/outlier removal.
+**Relevance to My Thesis:** Strong candidate for an implied-volatility surface modeling chapter; provides an ML method explicitly designed to respect no-arbitrage while scaling to large historical datasets (crucial for IvyDB/OptionMetrics applications).
+
+---
+### Enhancing Deep Hedging of Options with Implied Volatility Surface Feedback Information
+**Authors:** Pascal François, Geneviève Gauthier, Frédéric Godin, Carlos Octavio Pérez Mendoza
+**Year:** 2024
+**Source:** arXiv (via Semantic Scholar)
+**Link:** https://arxiv.org/abs/2407.21138
+**Key Findings:**
+- Proposes a dynamic hedging policy learned with a deep policy-gradient reinforcement learning method.
+- Improves hedging by feeding forward-looking information from implied-volatility surface dynamics into the agent’s state.
+- Reports outperformance versus practitioner/smiled-implied delta hedging, especially when transaction costs are present.
+**Relevance to My Thesis:** Directly supports an RL-for-hedging proposal with realistic frictions, and motivates using IV-surface features (term structure, skew) as state variables.
+
+---
+### Deep Learning for Options Trading: An End-To-End Approach
+**Authors:** Wee Ling Tan, (see paper)
+**Year:** 2024
+**Source:** arXiv (via Semantic Scholar)
+**Link:** https://arxiv.org/abs/2407.21791
+**Key Findings:**
+- Presents an end-to-end deep learning approach that maps option market data directly to trading signals without specifying a structural pricing model.
+- Backtests on a decade+ of equity options (S&P 100) and finds improvements in risk-adjusted performance relative to rules-based strategies.
+- Shows that turnover regularization materially matters, especially under high transaction costs.
+**Relevance to My Thesis:** Useful for an “ML for option mispricing / trading strategies” angle and for framing evaluation with realistic trading frictions (turnover and transaction cost accounting).
