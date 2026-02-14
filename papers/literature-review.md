@@ -509,3 +509,27 @@
 - Backtests on a decade+ of equity options (S&P 100) and finds improvements in risk-adjusted performance relative to rules-based strategies.
 - Shows that turnover regularization materially matters, especially under high transaction costs.
 **Relevance to My Thesis:** Useful for an “ML for option mispricing / trading strategies” angle and for framing evaluation with realistic trading frictions (turnover and transaction cost accounting).
+
+---
+### Constrained deep learning for pricing and hedging european options in incomplete markets
+**Authors:** Nicolas Baradel
+**Year:** 2025
+**Source:** arXiv (via Semantic Scholar)
+**Link:** https://arxiv.org/abs/2511.20837
+**Key Findings:**
+- Develops a single-network approach where the network represents the option price and its gradient defines the hedging strategy, trained to satisfy a self-financing constraint.
+- Emphasizes practical issues from non-smooth payoffs (vanilla kink, digitals discontinuity) and proposes constrained architectures that embed terminal payoff conditions.
+- Demonstrates improved P&L distributions (closer to zero, better tails) across payoff types and robustness checks (e.g., jumps).
+**Relevance to My Thesis:** Great for a “pricing + hedging jointly” proposal in realistic incomplete markets, and for linking ML architectures to economic constraints (boundary conditions / no-arbitrage style restrictions).
+
+---
+### Deep Hedging with Reinforcement Learning: A Practical Framework for Option Risk Management
+**Authors:** Travon Lucius, Christian Koch, Jacob Starling, Julia Zhu, Miguel Urena, Carrie Hu
+**Year:** 2025
+**Source:** arXiv (via Semantic Scholar)
+**Link:** https://arxiv.org/abs/2512.12420
+**Key Findings:**
+- Builds a leak-free RL environment for hedging equity index option exposures with transaction costs and position limits.
+- Uses IV term structure, skew, realized volatility, and macro variables as state (not as a pricing engine) to learn an overlay hedging policy.
+- Reports improved risk-adjusted performance vs baselines with controlled turnover; discusses statistical uncertainty and practical deployment considerations.
+**Relevance to My Thesis:** High-quality template for an empirical RL hedging study with realistic constraints; informs how to structure backtests, cost models, and evaluation beyond raw P&L.
