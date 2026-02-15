@@ -557,3 +557,124 @@
 - Produces hedging strategies alongside bounds, connecting pricing uncertainty with risk management.
 - Provides a scalable approach for high-dimensional early-exercise problems.
 **Relevance to My Thesis:** Strong reference for an American option pricing proposal and for framing ML methods as producing economically meaningful bounds and hedges (not just point estimates).
+
+---
+### Meta-Learning Neural Process for Implied Volatility Surfaces with SABR-induced Priors
+**Authors:** Not specified (see arXiv)
+**Year:** 2025
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/html/2509.11928v1)
+**Key Findings:**
+- Frames implied volatility surface construction as a meta-learning task rather than isolated per-day calibration.
+- Proposes the Volatility Neural Process, a model that learns across multiple trading days to improve surface predictions.
+- Incorporates SABR-induced priors to enforce financial structure and no-arbitrage constraints.
+**Relevance to My Thesis:** Provides a novel meta-learning approach to volatility surface modeling that could improve calibration speed and robustness for option pricing applications.
+
+---
+### Hexagon-Net: Heterogeneous Cross-View Aligned Graph Attention Networks for Implied Volatility Surface Prediction
+**Authors:** Kaiwei Liang
+**Year:** 2025
+**Source:** Semantic Scholar
+**Link:** [Read](https://www.semanticscholar.org/paper/515030f5717798c08a0758f861b1e9b53c2b0290)
+**Key Findings:**
+- Introduces a graph attention network architecture specifically designed for implied volatility surface forecasting.
+- Uses heterogeneous cross-view alignment to capture complex relationships across strikes and maturities.
+- Demonstrates improved prediction accuracy for multi-step-ahead volatility surface forecasts.
+**Relevance to My Thesis:** Novel deep learning architecture for volatility surface modeling that could enhance option pricing and trading signal generation.
+
+---
+### DeepSVM: Learning Stochastic Volatility Models with Physics-Informed Deep Operator Networks
+**Authors:** Not specified (see arXiv)
+**Year:** 2025
+**Source:** arXiv
+**Link:** [Read Full Paper](https://arxiv.org/html/2512.07162v1)
+**Key Findings:**
+- Replaces numerical pricing with neural operators that generalize across parameter regimes.
+- Enables near real-time option pricing and model calibration using physics-informed deep operator networks.
+- Designed to handle stochastic volatility models efficiently across different market conditions.
+**Relevance to My Thesis:** Cutting-edge approach combining physics-informed neural networks with operator learning for fast, scalable option pricing across volatility regimes.
+
+---
+### Barrier option pricing and volatility surface predicting with an extended physics-informed neural network
+**Authors:** Not specified (see ScienceDirect)
+**Year:** 2025
+**Source:** Expert Systems with Applications (ScienceDirect)
+**Link:** [Read](https://www.sciencedirect.com/science/article/abs/pii/S0957417425018986)
+**Key Findings:**
+- Proposes extended PINN (ePINN) architecture for barrier option pricing and volatility surface prediction.
+- Experiments on CSI 300ETF options (2019-2025) show 69% improvement over standard PINN in mean absolute error.
+- Demonstrates superior predictive accuracy for exotic derivatives using physics-informed constraints.
+**Relevance to My Thesis:** Recent empirical validation of physics-informed neural networks for option pricing with strong performance improvements, directly applicable to pricing methodology.
+
+---
+### Machine learning for quantitative finance: fast derivative pricing, hedging and fitting
+**Authors:** J. De Spiegeleer, D.B. Madan, S. Reyners, W. Schoutens
+**Year:** 2018
+**Source:** Quantitative Finance (Taylor & Francis)
+**Link:** [Read](https://www.tandfonline.com/doi/abs/10.1080/14697688.2018.1495335)
+**Key Findings:**
+- Comprehensive framework for applying machine learning to derivative pricing, hedging, and model calibration.
+- Demonstrates significant speed improvements over traditional numerical methods while maintaining accuracy.
+- Highly cited foundational paper (237 citations) establishing ML viability for quantitative finance.
+**Relevance to My Thesis:** Seminal reference establishing the practical benefits of ML for derivative pricing and hedging; provides benchmarks and evaluation methodology.
+
+---
+### Option pricing using machine learning
+**Authors:** C.F. Ivașcu
+**Year:** 2021
+**Source:** Expert Systems with Applications (Elsevier)
+**Link:** [Read](https://www.sciencedirect.com/science/article/pii/S0957417420306187)
+**Key Findings:**
+- Systematic comparison of machine learning methods (neural networks, random forests, SVMs) for option pricing.
+- Demonstrates ML models can match or exceed Black-Scholes pricing accuracy on real market data.
+- Highly cited (109 citations) with practical implementation insights for practitioners.
+**Relevance to My Thesis:** Key empirical benchmark comparing multiple ML approaches to option pricing, directly informing model selection and evaluation design.
+
+---
+### Deep hedging of derivatives using reinforcement learning
+**Authors:** J. Cao, J. Chen, J. Hull, Z. Poulos
+**Year:** 2021
+**Source:** arXiv
+**Link:** [Read](https://arxiv.org/abs/2103.16409)
+**Key Findings:**
+- Applies deep reinforcement learning to learn optimal hedging strategies for derivative portfolios.
+- Incorporates transaction costs and market frictions into the learning objective.
+- Highly influential paper (162 citations) demonstrating RL superiority over delta hedging under realistic conditions.
+**Relevance to My Thesis:** Foundational reference for RL-based hedging strategies; establishes methodology for comparing learned policies against classical delta hedging with transaction costs.
+
+---
+### Machine learning methods for pricing financial derivatives
+**Authors:** L. Fan, J. Sirignano
+**Year:** 2024
+**Source:** arXiv
+**Link:** [Read](https://arxiv.org/abs/2406.00459)
+**Key Findings:**
+- Recent comprehensive review of machine learning approaches to derivative pricing.
+- Covers neural networks, deep learning, and physics-informed methods with focus on practical implementation.
+- Evaluates computational efficiency and accuracy trade-offs across different ML architectures.
+**Relevance to My Thesis:** Up-to-date survey providing current state-of-the-art overview and identifying gaps for novel research contributions.
+
+---
+### Reinforcement Learning for Option Hedging Using Quantile Regression and Curriculum Learning with Historical Data Fusion
+**Authors:** Qiao Pan
+**Year:** 2025
+**Source:** Semantic Scholar
+**Link:** [Read](https://www.semanticscholar.org/paper/93fea217fb8c7a13fb96b5e20701c7dbceaaf1a5)
+**Key Findings:**
+- Combines quantile regression with curriculum learning for risk-sensitive option hedging.
+- Fuses historical data to improve out-of-sample hedging performance.
+- Demonstrates improved tail-risk management compared to standard RL approaches.
+**Relevance to My Thesis:** Recent advancement in RL hedging incorporating risk measures and historical learning, applicable to robust trading strategy development.
+
+---
+### Model-Free Deep Hedging with Transaction Costs and Light Data Requirements
+**Authors:** Pierre Brugière
+**Year:** 2025
+**Source:** Semantic Scholar
+**Link:** [Read](https://www.semanticscholar.org/paper/f89bd0f63cd8f8a039ff8d8b2c2d942339a81c6e)
+**Key Findings:**
+- Proposes model-free deep hedging approach that works with limited training data.
+- Explicitly incorporates transaction costs into the hedging objective.
+- Addresses practical deployment challenges including data scarcity and computational constraints.
+**Relevance to My Thesis:** Highly practical recent work addressing real-world constraints in implementing ML-based hedging strategies; directly applicable to trading bot development.
+
