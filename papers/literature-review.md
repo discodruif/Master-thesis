@@ -825,3 +825,42 @@
 - Emphasizes representation of the full surface and its temporal evolution rather than point forecasts.
 **Relevance to My Thesis:** Useful for data augmentation and stress-testing ML hedging/pricing models with realistic IV surface dynamics across regimes.
 
+
+---
+### "Deep Learning Option Pricing with Market Implied Volatility Surfaces"
+**Authors:** Lijie Ding; Egang Lu; Kin Cheung
+**Year:** 2025
+**Source:** Semantic Scholar / arXiv
+**Link:** https://arxiv.org/abs/2509.05911
+**Key Findings:**
+- Constructs arbitrage-free IV surfaces from SPX end-of-day options (2018–2023), then uses them as inputs to price American and Asian options (QuantLib labels).
+- Uses a VAE to compress full IV surfaces into a low-dimensional latent vector; feeds latent + (K,T,option type) into an MLP pricer.
+- Achieves high pricing accuracy with a single forward pass and highlights where errors concentrate (long maturities, near ATM where bid–ask is wider).
+**Relevance to My Thesis:** Strong template for (i) IV surface representation learning, (ii) ML pricing of exotics, and (iii) separating surface learning from pricer learning.
+
+
+---
+### "Option Return Predictability with Machine Learning and Big Data"
+**Authors:** Turan G. Bali; Heiner Beckmeyer; Mathis Moerke; Florian Weigert
+**Year:** 2023
+**Source:** SerpAPI (Google Scholar) — *Review of Financial Studies*
+**Link:** https://academic.oup.com/rfs/article-abstract/36/9/3548/7056660
+**Key Findings:**
+- Uses large information sets and ML methods to forecast option returns and characterize option-market return predictability.
+- Emphasizes out-of-sample prediction and economic value tests rather than in-sample fit.
+- Provides evidence that richer feature sets + nonlinear ML can improve predictability relative to linear benchmarks (per the paper’s design).
+**Relevance to My Thesis:** Directly supports an IvyDB-based thesis angle: ML signals → predicted option returns/mispricing → implementable strategies with costs.
+
+
+---
+### "Deep Hedging"
+**Authors:** Hans Buehler; Lukas Gonon; Josef Teichmann; Ben Wood
+**Year:** 2019
+**Source:** SerpAPI (Google Scholar) — *Quantitative Finance*
+**Link:** https://www.tandfonline.com/doi/abs/10.1080/14697688.2019.1571683
+**Key Findings:**
+- Introduces the deep hedging framework: learn hedging strategies via deep networks by directly optimizing hedging objectives under discretization and frictions.
+- Frames hedging as a data-driven control problem and connects to utility/risk-based loss functions.
+- Serves as a benchmark reference for modern ML hedging papers and practical performance evaluation.
+**Relevance to My Thesis:** Canonical citation anchoring any RL/deep-hedging proposal; also motivates focusing on *economic* hedging losses with transaction costs.
+
