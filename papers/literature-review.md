@@ -786,3 +786,42 @@
 - Reports economically meaningful strategy performance even after accounting for common controls (per the paper’s setup).
 - Highlights that option-market predictability can be structured as a supervised learning + portfolio construction pipeline.
 **Relevance to My Thesis:** Supports a “mispricing/trading strategy” thesis angle using IvyDB option returns: build ML predictors of option returns or implied-vol deviations, then test implementable strategies with transaction costs.
+
+---
+### "Whack-a-mole Learning: Physics-Informed Deep Calibration for Implied Volatility Surface"
+**Authors:** Kentaro Hoshisashi; Carolyn E. Phelan; Paolo Barucca
+**Year:** 2024
+**Source:** Semantic Scholar (DOI via IEEE)
+**Link:** https://www.semanticscholar.org/paper/3304532fbed879ec313cb0566678a0dfddf03792
+**Key Findings:**
+- Proposes *Whack-a-mole Learning* (WamL) to balance multiple calibration objectives in deep IV surface fitting.
+- Enforces PDE structure and no-arbitrage inequality constraints while fitting sparse/uneven option quote grids.
+- Improves stability of surface calibration and risk-profile representation vs naive PINN weighting.
+**Relevance to My Thesis:** Directly informs how to impose economic/no-arbitrage constraints in ML models for IV surface estimation and downstream pricing/hedging.
+
+
+---
+### "Enhancing Deep Hedging of Options with Implied Volatility Surface Feedback Information"
+**Authors:** Pascal François; Geneviève Gauthier; Frédéric Godin; Carlos Octavio Pérez Mendoza
+**Year:** 2024
+**Source:** Semantic Scholar / arXiv
+**Link:** https://arxiv.org/abs/2407.21138
+**Key Findings:**
+- Uses a deep policy-gradient / RL approach to learn dynamic hedging rules for S\&P 500 options.
+- Adds forward-looking information from the implied volatility surface as state features.
+- Reports improved hedging performance vs practitioner and smile-adjusted delta hedging, especially with transaction costs.
+**Relevance to My Thesis:** Provides a concrete blueprint for evaluating ML/RL hedging rules against classical benchmarks under realistic trading frictions.
+
+
+---
+### "FuNVol: A Multi-Asset Implied Volatility Market Simulator using Functional Principal Components and Neural SDEs"
+**Authors:** Vedant Choudhary; Sebastian Jaimungal; Maxime Bergeron
+**Year:** 2023
+**Source:** Semantic Scholar
+**Link:** https://www.semanticscholar.org/paper/3affe483747d864c1b2c2e1064cc070b6c4187ee
+**Key Findings:**
+- Builds a multi-asset implied volatility dynamics simulator combining functional PCA factors and neural SDEs.
+- Targets realistic cross-asset IV co-movements, enabling scenario generation for hedging and risk.
+- Emphasizes representation of the full surface and its temporal evolution rather than point forecasts.
+**Relevance to My Thesis:** Useful for data augmentation and stress-testing ML hedging/pricing models with realistic IV surface dynamics across regimes.
+
