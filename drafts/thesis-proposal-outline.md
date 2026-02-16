@@ -1,137 +1,94 @@
-# Thesis Proposal: Physics-Informed Neural Networks for Arbitrage-Free Implied Volatility Surface Modeling
+# Thesis Proposal Outline (Selected Best Proposal)
 
+**Lead Proposal Title:** No‑Arbitrage Constrained Machine Learning for Implied Volatility Surfaces: Pricing and Hedging Implications in SPX Options  
 **Author:** Maurits van Eck  
 **ANR:** 2062644  
-**Program:** MSc Finance  
-**Institution:** Tilburg University  
-**Date:** February 15, 2026  
-**Status:** Lead Proposal (Selected from 5 alternatives)
+**Program:** MSc Finance, Tilburg University  
+**Date:** February 16, 2026  
+**Status:** Lead Proposal (selected from 5 alternatives)
 
 ---
 
 ## Part 1: Research Question
 
-Can physics-informed neural networks (PINNs) that embed no-arbitrage constraints produce more accurate and robust implied volatility surfaces than traditional calibration methods, and do these improvements translate into superior option pricing and hedging performance in out-of-sample tests?
+Option quotes are sparse and noisy, and unconstrained ML surface estimators can violate static no‑arbitrage restrictions (monotonicity/convexity in strike and calendar monotonicity). These violations may distort downstream pricing and hedging. The thesis asks:
 
-The central economic motivation is that accurate volatility surface modeling is critical for derivative pricing, risk management, and trading strategy development. Traditional parametric models (e.g., SABR, SVI) often fail to capture the complex dynamics of the implied volatility surface, particularly during periods of market stress. Pure data-driven machine learning approaches may produce surfaces that violate no-arbitrage conditions, leading to mispricing and exploitation. This research investigates whether embedding financial constraints directly into neural network architectures can achieve the dual objectives of flexibility and economic consistency.
+**Main RQ:** *Does enforcing no‑arbitrage constraints in machine‑learning models of the implied volatility surface improve (i) out‑of‑sample option pricing accuracy and (ii) transaction‑cost‑adjusted hedging performance relative to unconstrained ML and classical parametric benchmarks?*
 
-Specifically, I will address three sub-questions: (1) Do PINNs trained with no-arbitrage constraints outperform traditional parametric models in fitting implied volatility surfaces? (2) How do PINN-generated surfaces perform in out-of-sample pricing accuracy for European and American options? (3) Can PINN-based surfaces improve hedging effectiveness (measured by P&L variance and tail risk) compared to surfaces from conventional methods?
-
-This research contributes to the growing literature on hybrid approaches that combine domain knowledge from financial mathematics with the flexibility of deep learning, offering practical tools for market practitioners.
+Economic contribution: connect *statistical surface fit* to *economic outcomes* (hedging losses net of transaction costs, tail risk), providing implementable evidence for derivatives desks and risk managers.
 
 ---
 
-## Part 2: Literature Review
+## Part 2: Literature Review (1 page target)
 
-The pricing and hedging of options depends critically on accurate modeling of the implied volatility surface (Cont & Da Fonseca, 2002, *Review of Finance*). Traditional approaches use parametric models such as SABR (Hagan et al., 2002, *Wilmott Magazine*) or SVI (Gatheral, 2004, *Wilmott Magazine*), which impose strong structural assumptions that may not hold empirically, especially during turbulent markets.
+- **Classical foundations:** Black & Scholes (1973); stochastic volatility as a key empirical extension (Heston, 1993).
+- **Deep hedging / economic evaluation:** Buehler et al. (2019, *Quantitative Finance*) frames hedging as direct optimization under discrete trading and frictions.
+- **Constraint-aware IV surface learning:** Hoshisashi, Phelan & Barucca (2024) propose Whack‑a‑mole Learning to balance multi‑objective deep calibration while satisfying PDE/no‑arbitrage constraints.
+- **IVS information in hedging:** François et al. (2024) show that implied-volatility-surface feedback improves RL hedging for S&P 500 options, particularly with transaction costs.
+- **Surface dynamics and scenario realism:** Choudhary, Jaimungal & Bergeron (2023, FuNVol) combine functional PCA and neural SDEs to model implied-vol dynamics.
 
-Recent advances in machine learning have demonstrated that neural networks can approximate complex pricing functions efficiently (De Spiegeleer et al., 2018, *Quantitative Finance*). However, unconstrained neural networks risk producing arbitrage opportunities, undermining their practical utility (Horvath et al., 2021, *Quantitative Finance*). Physics-informed neural networks (PINNs) address this limitation by embedding partial differential equations or economic constraints directly into the loss function during training (Raissi et al., 2019, *Journal of Computational Physics*).
-
-Empirical applications of PINNs to option pricing have shown promise. Liu et al. (2024, *arXiv*) demonstrate that embedding the Black-Scholes PDE into neural network training improves pricing accuracy with less data. Ackerer et al. (2020, *NeurIPS*) propose deep smoothing methods for volatility surfaces that respect structural properties. Recent work by Wiedemann et al. (2024, *arXiv*) introduces operator deep smoothing for implied volatility, enforcing no-arbitrage constraints while handling sparse and noisy option data. The 2025 study on barrier options using extended PINNs (*Expert Systems with Applications*) reports a 69% improvement in pricing accuracy over standard approaches.
-
-Despite these advances, the literature remains limited in comprehensive out-of-sample evaluations of PINN-based surfaces for both pricing and hedging tasks. This research fills this gap by constructing a rigorous empirical comparison using high-quality U.S. equity options data and evaluating performance across multiple dimensions: fitting accuracy, pricing errors, and hedging effectiveness.
-
----
-
-## Part 3: Research Plan
-
-The empirical investigation follows a three-stage design:
-
-**Stage 1: Model Development and Training**
-
-I will construct a physics-informed neural network architecture that takes option contract characteristics (strike $K$, maturity $T$, underlying price $S_t$, interest rate $r$) as inputs and outputs the implied volatility $\sigma(K, T, S_t, r)$. The loss function combines a data-fitting term with penalty terms enforcing no-arbitrage constraints:
-
-$$
-\mathcal{L} = \underbrace{\frac{1}{N}\sum_{i=1}^N \left(\sigma_i^{\text{market}} - \sigma_i^{\text{PINN}}\right)^2}_{\text{MSE term}} + \lambda_1 \underbrace{\mathcal{L}_{\text{arb}}}_{\text{no-arbitrage}} + \lambda_2 \underbrace{\mathcal{L}_{\text{smooth}}}_{\text{smoothness}}
-$$
-
-The no-arbitrage constraint $\mathcal{L}_{\text{arb}}$ enforces conditions such as:
-- Calendar spread: $\frac{\partial C}{\partial T} \geq 0$
-- Butterfly spread: $\frac{\partial^2 C}{\partial K^2} \geq 0$
-- Put-call parity consistency
-
-The smoothness term $\mathcal{L}_{\text{smooth}}$ penalizes excessive curvature to ensure realistic surface dynamics.
-
-**Stage 2: Out-of-Sample Pricing Evaluation**
-
-Using a rolling-window approach, I will estimate models on data from month $t$ and evaluate pricing accuracy on month $t+1$. The pricing error regression is:
-
-$$
-\text{Price Error}_{i,t+1} = \alpha + \beta_1 \text{PINN}_{i,t} + \beta_2 \text{Moneyness}_{i,t} + \beta_3 \text{Maturity}_{i,t} + \beta_4 \text{VIX}_{t} + \varepsilon_{i,t+1}
-$$
-
-where $\text{PINN}_{i,t}$ is a dummy variable indicating whether the PINN model was used. I hypothesize $\beta_1 < 0$, indicating lower pricing errors with PINN-generated surfaces. Benchmark models include SABR, SVI, and unconstrained neural networks.
-
-**Stage 3: Hedging Performance Evaluation**
-
-To assess hedging effectiveness, I will construct delta-hedged portfolios using Greeks computed from each volatility surface model. The hedging error regression is:
-
-$$
-\text{Hedging P\&L}_{i,t+1} = \gamma_0 + \gamma_1 \text{PINN}_{i,t} + \gamma_2 \Delta S_{t+1} + \gamma_3 \text{Gamma}_{i,t} \cdot (\Delta S_{t+1})^2 + \gamma_4 \text{TC}_{i,t} + \eta_{i,t+1}
-$$
-
-where $\text{TC}_{i,t}$ captures transaction costs from rebalancing. The dependent variable measures the residual P&L after delta hedging. I will evaluate both mean hedging error and tail risk (95th percentile P&L). A successful PINN model should reduce both average hedging variance and extreme losses.
+Positioning: the thesis tests whether **arbitrage‑free ML surfaces** deliver economic gains beyond improved fit.
 
 ---
 
-## Part 4: Data Sources
+## Part 3: Research Plan (must include equations)
 
-The primary data source is **OptionMetrics IvyDB US**, accessed via the Wharton Research Data Services (WRDS) platform. Tilburg University provides verified institutional access to WRDS, which I have confirmed through the university library portal.
+### Stage A — Surface estimation (daily)
+Estimate IVS \(\sigma(K,T)\) using three approaches:
+1) parametric benchmark (e.g., SVI/Heston-style proxies), 2) unconstrained ML, 3) constrained ML with explicit static no‑arbitrage penalties.
 
-IvyDB US contains daily option prices, implied volatilities, and Greeks for all U.S. exchange-listed equity and index options from 1996 to present. The dataset includes:
-- Standardized option prices (bid, ask, mid)
-- Implied volatilities computed using market-standard models
-- Underlying security prices and corporate actions adjustments
-- Risk-free rates (interpolated zero-coupon curves)
-- Option contract specifications (strike, maturity, type, exercise style)
+Key static constraints in price space for calls \(C(K,T)\):
+- \(\partial C/\partial K \le 0\) (monotonicity)
+- \(\partial^2 C/\partial K^2 \ge 0\) (butterfly / convexity)
+- \(\partial C/\partial T \ge 0\) (calendar)
 
-For this study, I will focus on **S&P 500 index options (SPX)** from 2019-2024, providing sufficient data for training (2019-2022), validation (2023), and out-of-sample testing (2024). This period includes both low-volatility (2019) and high-volatility (2020 COVID crash, 2022 inflation shock) regimes, enabling robust model evaluation.
+### Stage B — Pricing accuracy (out-of-sample)
+\[
+|PE_{i,t}^{(m)}| = \gamma_m + \delta_1 \text{BidAsk}_{i,t} + \delta_2 \text{Moneyness}_{i,t} + \delta_3 \text{TTM}_{i,t} + u_{i,t}
+\]
+Compare \(\gamma_m\) across models \(m\) in rolling time splits.
 
-**Descriptive Statistics** (projected sample, SPX options 2019-2024):
+### Stage C — Hedging performance (net of transaction costs)
+Compute discrete delta‑hedging P&L using deltas from each surface; evaluate mean, P95, and CVaR of hedging losses.
 
-| Variable | Mean | Std Dev | Min | Max | Observations |
-|----------|------|---------|-----|-----|--------------|
-| Option Price ($) | 45.32 | 78.91 | 0.05 | 850.20 | ~2,500,000 |
-| Implied Volatility (%) | 18.45 | 8.72 | 5.30 | 95.40 | ~2,500,000 |
-| Moneyness (S/K) | 1.02 | 0.08 | 0.75 | 1.30 | ~2,500,000 |
-| Days to Maturity | 45 | 35 | 1 | 365 | ~2,500,000 |
-| Delta | 0.51 | 0.30 | 0.01 | 0.99 | ~2,500,000 |
-| VIX Level (%) | 19.85 | 9.12 | 9.14 | 82.69 | ~1,500 days |
-
-Additional market data (VIX index, risk-free rates) will be obtained from FRED (Federal Reserve Economic Data) and merged with the OptionMetrics dataset.
-
----
-
-## Part 5: References
-
-Ackerer, D., Tagasovska, N., & Vatter, T. (2020). Deep smoothing of the implied volatility surface. *Advances in Neural Information Processing Systems*, 33, 11552–11563.
-
-Cont, R., & Da Fonseca, J. (2002). Dynamics of implied volatility surfaces. *Review of Finance*, 6(1), 45–81.
-
-De Spiegeleer, J., Madan, D. B., Reyners, S., & Schoutens, W. (2018). Machine learning for quantitative finance: Fast derivative pricing, hedging and fitting. *Quantitative Finance*, 18(10), 1635–1643.
-
-Gatheral, J. (2004). A parsimonious arbitrage-free implied volatility parameterization with application to the valuation of volatility derivatives. *Wilmott Magazine*, May 2004, 84–92.
-
-Hagan, P. S., Kumar, D., Lesniewski, A. S., & Woodward, D. E. (2002). Managing smile risk. *Wilmott Magazine*, September 2002, 84–108.
-
-Horvath, B., Muguruza, A., & Tomas, M. (2021). Deep learning volatility: A deep neural network perspective on pricing and calibration in (rough) volatility models. *Quantitative Finance*, 21(1), 11–27.
-
-Liu, S., Borovykh, A., Grzelak, L. A., & Oosterlee, C. W. (2024). Option pricing with physics-informed neural networks. *arXiv preprint arXiv:2312.06711*.
-
-Raissi, M., Perdikaris, P., & Karniadakis, G. E. (2019). Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations. *Journal of Computational Physics*, 378, 686–707.
-
-Wiedemann, R., Jacquier, A., & Gonon, L. (2024). Operator deep smoothing for implied volatility. *arXiv preprint arXiv:2406.11520*.
-
-Expert Systems with Applications (2025). Barrier option pricing and volatility surface predicting with an extended physics-informed neural network. *Expert Systems with Applications*, in press.
+Hedging loss regression:
+\[
+HE_{i,t}^{(m)} = \alpha_m + \beta_1 \lvert\Delta\sigma_{t}\rvert + \beta_2 \text{TC}_{i,t} + \beta_3 \text{VIX}_{t} + \beta_4 \text{Moneyness}_{i,t} + \beta_5 \text{TTM}_{i,t} + \varepsilon_{i,t}
+\]
+Focus: do constrained surfaces reduce hedging losses especially in high‑VIX regimes?
 
 ---
 
-## Alternative Proposals Considered (Feb 15, 2026)
+## Part 4: Data Sources (must include descriptive stats table)
 
-1. **Physics-Informed Neural Networks for Arbitrage-Free Implied Volatility Surface Modeling** ✓ (Selected)
-2. Deep Reinforcement Learning for Multi-Asset Option Hedging with Transaction Costs
-3. Meta-Learning for Rapid Option Pricing Model Calibration Across Market Regimes
-4. Attention-Based Transformer Models for Joint Option Pricing and Implied Volatility Forecasting
-5. Hybrid Ensemble Methods Combining Machine Learning and Traditional Models for Robust Option Pricing
+**Primary dataset:** **OptionMetrics IvyDB US via WRDS (access verified).**
 
-All proposals archived in `drafts/proposals/2026-02-15-proposal-[1-5].md`
+- SPX option end‑of‑day quotes (bid/ask/mid), implied vol, contract terms (K, T), liquidity measures.
+- Underlying index series and inputs for forward/discounting (risk‑free rates).
+
+**Descriptive statistics table (to be filled in thesis):**
+
+| Variable | Mean | Std | P5 | P50 | P95 | N |
+|---|---:|---:|---:|---:|---:|---:|
+| Implied volatility (IV) |  |  |  |  |  |  |
+| Log-moneyness ln(K/F) |  |  |  |  |  |  |
+| Time-to-maturity (days) |  |  |  |  |  |  |
+| Bid-ask spread |  |  |  |  |  |  |
+| Option mid price |  |  |  |  |  |  |
+| Underlying daily return |  |  |  |  |  |  |
+
+---
+
+## Part 5: References (APA)
+
+Black, F., & Scholes, M. (1973). The pricing of options and corporate liabilities. *Journal of Political Economy, 81*(3), 637–654.
+
+Buehler, H., Gonon, L., Teichmann, J., & Wood, B. (2019). Deep hedging. *Quantitative Finance, 19*(8), 1271–1291.
+
+Choudhary, V., Jaimungal, S., & Bergeron, M. (2023). FuNVol: A multi-asset implied volatility market simulator using functional principal components and neural SDEs. *Working paper*.
+
+François, P., Gauthier, G., Godin, F., & Pérez Mendoza, C. O. (2024). Enhancing deep hedging of options with implied volatility surface feedback information. *arXiv*.
+
+Heston, S. L. (1993). A closed-form solution for options with stochastic volatility with applications to bond and currency options. *Review of Financial Studies, 6*(2), 327–343.
+
+Hoshisashi, K., Phelan, C. E., & Barucca, P. (2024). Whack-a-mole learning: Physics-informed deep calibration for implied volatility surface. *Working paper/Proceedings*.
