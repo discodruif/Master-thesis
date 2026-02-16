@@ -864,3 +864,55 @@
 - Serves as a benchmark reference for modern ML hedging papers and practical performance evaluation.
 **Relevance to My Thesis:** Canonical citation anchoring any RL/deep-hedging proposal; also motivates focusing on *economic* hedging losses with transaction costs.
 
+
+---
+### "Deep Hedging with Reinforcement Learning: A Practical Framework for Option Risk Management"
+**Authors:** (see paper)
+**Year:** 2025
+**Source:** arXiv
+**Link:** https://arxiv.org/abs/2512.12420
+**Key Findings:**
+- Presents a practical RL-based deep-hedging workflow for option risk management with discrete rebalancing.
+- Focuses on implementable training/backtesting design choices (state variables, action constraints, transaction costs).
+- Positions RL as a flexible alternative to delta-based rules when markets are nonstationary and frictions matter.
+**Relevance to My Thesis:** Useful “applied RL hedging” reference for designing realistic backtests and translating model outputs into trading/hedging actions.
+
+
+---
+### "Model-Free Deep Hedging with Transaction Costs and Light Data Requirements"
+**Authors:** (see paper)
+**Year:** 2025
+**Source:** arXiv
+**Link:** https://arxiv.org/abs/2505.22836
+**Key Findings:**
+- Proposes deep hedging methods intended to work with limited data and explicit transaction cost modeling.
+- Highlights robustness considerations when the data-generating process is unknown or misspecified.
+- Discusses hedging objectives aligned with economic loss functions rather than pure pricing error.
+**Relevance to My Thesis:** Directly supports a thesis design that evaluates *net-of-cost* hedging performance and robustness, not just statistical fit.
+
+
+---
+### "Towards a fast and robust deep hedging approach"
+**Authors:** (see paper)
+**Year:** 2025
+**Source:** arXiv
+**Link:** https://arxiv.org/abs/2504.16436
+**Key Findings:**
+- Studies computational and robustness improvements to deep-hedging style models.
+- Emphasizes stability and speed required for practical deployment and extensive backtests.
+- Provides methodological guidance for training/validation to avoid overfitting in hedging tasks.
+**Relevance to My Thesis:** Helpful for building a thesis pipeline that is computationally feasible on large IvyDB panels and robust across market regimes.
+
+
+---
+### "Jump Diffusion-Informed Neural Networks with Transfer Learning for Accurate American Option Pricing under Data Scarcity"
+**Authors:** Qiguo Sun; Hanyue Huang; Xibei Yang; Yuwei Zhang
+**Year:** 2024
+**Source:** Semantic Scholar
+**Link:** https://www.semanticscholar.org/paper/7fc63ebf965b0835771a4a7d439ea1dc6082b595
+**Key Findings:**
+- Uses model-informed neural networks (jump-diffusion structure) combined with transfer learning to improve American option pricing when labeled data is scarce.
+- Targets the early-exercise feature explicitly, emphasizing accuracy under limited training samples.
+- Demonstrates that injecting financial structure can reduce sample complexity vs purely data-driven networks.
+**Relevance to My Thesis:** Supports an American-option pricing proposal: compare structure-aware networks vs generic ML, and evaluate generalization across regimes/maturities.
+
