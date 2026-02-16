@@ -678,3 +678,111 @@
 - Addresses practical deployment challenges including data scarcity and computational constraints.
 **Relevance to My Thesis:** Highly practical recent work addressing real-world constraints in implementing ML-based hedging strategies; directly applicable to trading bot development.
 
+
+---
+### SANOS Smooth strictly Arbitrage-free Non-parametric Option Surfaces
+**Authors:** Hans Buehler, Blanka Horvath, Anastasis Kratsios, Yannick Limmer, Raeid Saqur
+**Year:** 2026
+**Source:** arXiv (q-fin.CP)
+**Link:** [Read](https://arxiv.org/abs/2601.11209)
+**Key Findings:**
+- Proposes a numerically efficient non-parametric construction of option price surfaces that are *smooth* and *strictly static-arbitrage-free* across strikes and maturities.
+- Interprets the method as a smooth generalization of piecewise-linear no-arbitrage interpolation, with practical implementation details for surface building.
+- Emphasizes stability and flexibility, making the surface suitable as a downstream input for pricing/hedging models.
+**Relevance to My Thesis:** A high-leverage building block: any ML forecasting/pricing model that consumes implied vols/prices should be trained/evaluated on surfaces that respect no-arbitrage. This paper can anchor my data-prep methodology using IvyDB implied vols.
+
+---
+### Forecasting implied volatility surface with generative diffusion models
+**Authors:** Chen Jin, Ankush Agarwal
+**Year:** 2025
+**Source:** arXiv (q-fin.CP)
+**Link:** [Read](https://arxiv.org/abs/2511.07571)
+**Key Findings:**
+- Introduces conditional diffusion (DDPM-style) generative models to forecast *entire* implied volatility (IV) surfaces.
+- Targets improved stability vs GAN-based approaches and discusses conditioning on surface histories to capture path-dependence of volatility dynamics.
+- Focuses on generating *arbitrage-free* IV surfaces suitable for scenario generation and risk management.
+**Relevance to My Thesis:** Directly informs a thesis angle on transformer/diffusion models for IV surface forecasting and the economic value of better surface forecasts for hedging and trading.
+
+---
+### Controllable Generation of Implied Volatility Surfaces with Variational Autoencoders
+**Authors:** Jing Wang, Shuaiqiang Liu, Cornelis Vuik
+**Year:** 2025
+**Source:** arXiv (q-fin.CP)
+**Link:** [Read](https://arxiv.org/abs/2509.01743)
+**Key Findings:**
+- Proposes a VAE-based generative framework to synthesize IV surfaces with *explicit control* over interpretable shape features (e.g., skew/smile, term-structure patterns).
+- Frames IV surface generation as representation learning in a low-dimensional latent space with controlled perturbations.
+- Useful for stress-testing and for augmenting sparse option panels.
+**Relevance to My Thesis:** Provides a concrete method to create controlled IV scenarios (regime shifts) to test robustness of ML pricing/hedging/trading strategies trained on IvyDB.
+
+---
+### A two-step framework for arbitrage-free prediction of the implied volatility surface
+**Authors:** Wen-Ying Zhang, Lingfei Li, Gongqiu Zhang
+**Year:** 2021
+**Source:** Semantic Scholar (Quantitative Finance)
+**Link:** [Read](https://www.semanticscholar.org/paper/2f5306232ae0b129a1d5f106c8a18470e83b661b)
+**Key Findings:**
+- Separates (i) unconstrained statistical/ML prediction of IV features from (ii) a post-processing step that enforces static no-arbitrage.
+- Shows how a constraint-enforcement layer can correct violations (calendar/butterfly) without fully discarding predictive content.
+- Motivates evaluation metrics beyond point error: frequency/magnitude of arbitrage violations.
+**Relevance to My Thesis:** Offers a practical blueprint: compare “raw ML surface forecasts” vs “ML + arbitrage-repair,” and test whether arbitrage repair improves out-of-sample hedging P\&L.
+
+---
+### Arbitrage-Free Implied Volatility Surface Generation with Variational Autoencoders
+**Authors:** Brian Ning, Sebastian Jaimungal, Xiaorong Zhang, M. Bergeron
+**Year:** 2021
+**Source:** Semantic Scholar (SIAM Journal on Financial Mathematics)
+**Link:** [Read](https://www.semanticscholar.org/paper/58081e2d12b5f1ef0ad6e6bda287a328b0a2e2e3)
+**Key Findings:**
+- Uses VAE-style generative modeling to learn distributions over IV surfaces while respecting no-arbitrage constraints.
+- Demonstrates how generative models can be used for scenario generation, interpolation, and simulation of realistic surfaces.
+- Emphasizes constraint handling as central when generating derivative-implied objects.
+**Relevance to My Thesis:** Strengthens the “generative modeling for IV surfaces” research track, with explicit emphasis on no-arbitrage constraints—highly relevant for any trading strategy built on model-implied vols.
+
+---
+### Simulation of Arbitrage-Free Implied Volatility Surfaces
+**Authors:** Rama Cont, Milena Vuletić
+**Year:** 2023
+**Source:** Semantic Scholar (SSRN)
+**Link:** [Read](https://www.semanticscholar.org/paper/39a616e9c299844cd55fe4d9437844cea72d889c)
+**Key Findings:**
+- Develops a simulation framework for IV surfaces that enforces static arbitrage constraints while allowing realistic dynamics.
+- Targets use cases in risk management and stress testing where scenario realism + no-arbitrage are both required.
+- Highlights trade-offs between flexibility and constraint satisfaction.
+**Relevance to My Thesis:** Useful as a benchmark “no-arbitrage surface generator” against which to compare diffusion/VAE approaches, and for producing controlled backtesting scenarios.
+
+---
+### Deep Reinforcement Learning for Option Replication and Hedging
+**Authors:** Jiayi Du, Matthieu Jin, Petter Kolm, Gordon Ritter, Yixuan Wang, Bofei Zhang
+**Year:** 2020
+**Source:** Semantic Scholar (The Journal of Financial Data Science)
+**Link:** [Read](https://www.semanticscholar.org/paper/dca343cb483e14f213b87125450e8464d8501760)
+**Key Findings:**
+- Formulates option replication/hedging with discrete rebalancing and nonlinear transaction costs as a deep RL control problem.
+- Evaluates RL hedging policies against classical delta hedging baselines under realistic trading frictions.
+- Uses modern DRL algorithms to learn state-dependent hedging actions from simulated/market-like environments.
+**Relevance to My Thesis:** Provides a credible “economics of ML hedging” design: evaluate P\&L, risk, and transaction-cost-adjusted performance using implementable discrete hedging rules.
+
+---
+### Option hedging with risk averse reinforcement learning
+**Authors:** Edoardo Vittori, M. Trapletti, Marcello Restelli
+**Year:** 2020
+**Source:** Semantic Scholar (AI in Finance)
+**Link:** [Read](https://www.semanticscholar.org/paper/f7a69a1bcc0b00f5ddd05be02934390332aa7a64)
+**Key Findings:**
+- Applies risk-averse RL (trust-region style) to option hedging, emphasizing tail-risk control rather than mean performance only.
+- Incorporates realistic features: discrete trading and transaction costs.
+- Connects RL objective design (utility/risk measure) to hedging outcomes.
+**Relevance to My Thesis:** Helps motivate why “better statistical accuracy” is not enough; hedging should be judged with economic risk measures (e.g., CVaR of hedging error) and costs.
+
+---
+### Option return predictability via machine learning: new evidence from China
+**Authors:** Y. Huang, Z. Wang, Z. Xiao
+**Year:** 2025
+**Source:** SerpAPI (Google Scholar) — Journal of Futures Markets
+**Link:** [Read](https://onlinelibrary.wiley.com/doi/abs/10.1002/fut.22604)
+**Key Findings:**
+- Studies option return predictability using ML-based multifactor signals; links predictive signals to mispricing dynamics.
+- Reports economically meaningful strategy performance even after accounting for common controls (per the paper’s setup).
+- Highlights that option-market predictability can be structured as a supervised learning + portfolio construction pipeline.
+**Relevance to My Thesis:** Supports a “mispricing/trading strategy” thesis angle using IvyDB option returns: build ML predictors of option returns or implied-vol deviations, then test implementable strategies with transaction costs.
