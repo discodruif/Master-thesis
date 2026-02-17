@@ -1,94 +1,122 @@
-# Thesis Proposal Outline (Selected Best Proposal)
+# Thesis Proposal Outline (Aligned with Lead Proposal)
 
-**Lead Proposal Title:** No‑Arbitrage Constrained Machine Learning for Implied Volatility Surfaces: Pricing and Hedging Implications in SPX Options  
-**Author:** Maurits van Eck  
-**ANR:** 2062644  
-**Program:** MSc Finance, Tilburg University  
-**Date:** February 16, 2026  
-**Status:** Lead Proposal (selected from 5 alternatives)
+**Title:** Machine Learning for Cross-Sectional Option Return Prediction: Out-of-Sample Evidence and the Limits of Implementability
+**Author:** Maurits van Eck
+**ANR:** 2062644
+**Program:** MSc Finance, Tilburg University
+**Date:** February 2026
+**Status:** Lead Proposal — full version in `drafts/proposals/2026-02-16-proposal-3.md`
 
 ---
 
 ## Part 1: Research Question
 
-Option quotes are sparse and noisy, and unconstrained ML surface estimators can violate static no‑arbitrage restrictions (monotonicity/convexity in strike and calendar monotonicity). These violations may distort downstream pricing and hedging. The thesis asks:
+Option returns exhibit predictable cross-sectional variation linked to implied volatility, skew, and underlying momentum. Bali et al. (2023, *RFS*) show that ML exploits these patterns, but the critical question is whether alpha survives option market frictions.
 
-**Main RQ:** *Does enforcing no‑arbitrage constraints in machine‑learning models of the implied volatility surface improve (i) out‑of‑sample option pricing accuracy and (ii) transaction‑cost‑adjusted hedging performance relative to unconstrained ML and classical parametric benchmarks?*
+**Main RQ:** *To what extent do nonlinear ML models improve out-of-sample prediction of cross-sectional option returns beyond linear benchmarks, and does the resulting long-short alpha remain economically significant after realistic transaction costs?*
 
-Economic contribution: connect *statistical surface fit* to *economic outcomes* (hedging losses net of transaction costs, tail risk), providing implementable evidence for derivatives desks and risk managers.
+**H1 (Predictability):** Nonlinear ML (XGBoost, MLP) achieves higher OOS R-squared than OLS/Lasso for weekly option returns, driven by volatility-risk-premium proxies (IV level, skew, term structure slope).
 
----
+**H2 (Implementability):** The long-short portfolio's net-of-cost Sharpe ratio is significantly > 0, with break-even spread exceeding the median observed half-spread.
 
-## Part 2: Literature Review (1 page target)
-
-- **Classical foundations:** Black & Scholes (1973); stochastic volatility as a key empirical extension (Heston, 1993).
-- **Deep hedging / economic evaluation:** Buehler et al. (2019, *Quantitative Finance*) frames hedging as direct optimization under discrete trading and frictions.
-- **Constraint-aware IV surface learning:** Hoshisashi, Phelan & Barucca (2024) propose Whack‑a‑mole Learning to balance multi‑objective deep calibration while satisfying PDE/no‑arbitrage constraints.
-- **IVS information in hedging:** François et al. (2024) show that implied-volatility-surface feedback improves RL hedging for S&P 500 options, particularly with transaction costs.
-- **Surface dynamics and scenario realism:** Choudhary, Jaimungal & Bergeron (2023, FuNVol) combine functional PCA and neural SDEs to model implied-vol dynamics.
-
-Positioning: the thesis tests whether **arbitrage‑free ML surfaces** deliver economic gains beyond improved fit.
+**Key insight:** H1 can hold while H2 fails — implying ML captures real predictability that is unimplementable, informing option market efficiency.
 
 ---
 
-## Part 3: Research Plan (must include equations)
+## Part 2: Literature Review
 
-### Stage A — Surface estimation (daily)
-Estimate IVS \(\sigma(K,T)\) using three approaches:
-1) parametric benchmark (e.g., SVI/Heston-style proxies), 2) unconstrained ML, 3) constrained ML with explicit static no‑arbitrage penalties.
+| Theme | Key papers | Role in thesis |
+|---|---|---|
+| Option return predictability | Goyal & Saretto (2009, *JFE*); Cao & Han (2013, *JF*); Christoffersen, Heston, & Jacobs (2013, *RFS*) | Establishes that IV-realized vol gap, idiosyncratic vol, and surface shape predict option returns |
+| ML in asset pricing | Gu, Kelly, & Xiu (2020, *RFS*); Bali et al. (2023, *RFS*) | Methodological framework (rolling splits, portfolio sorts) and direct precedent for ML in options |
+| Transaction costs & implementability | Muravyev (2016, *JF*); Novy-Marx & Velikov (2016, *RFS*) | Option spreads are wide; equity anomalies often vanish after costs — gap: no systematic cost analysis for ML option strategies |
+| Multiple testing | Harvey, Liu, & Zhu (2016, *RFS*) | Justifies |t| > 3.0 threshold for alpha significance |
 
-Key static constraints in price space for calls \(C(K,T)\):
-- \(\partial C/\partial K \le 0\) (monotonicity)
-- \(\partial^2 C/\partial K^2 \ge 0\) (butterfly / convexity)
-- \(\partial C/\partial T \ge 0\) (calendar)
-
-### Stage B — Pricing accuracy (out-of-sample)
-\[
-|PE_{i,t}^{(m)}| = \gamma_m + \delta_1 \text{BidAsk}_{i,t} + \delta_2 \text{Moneyness}_{i,t} + \delta_3 \text{TTM}_{i,t} + u_{i,t}
-\]
-Compare \(\gamma_m\) across models \(m\) in rolling time splits.
-
-### Stage C — Hedging performance (net of transaction costs)
-Compute discrete delta‑hedging P&L using deltas from each surface; evaluate mean, P95, and CVaR of hedging losses.
-
-Hedging loss regression:
-\[
-HE_{i,t}^{(m)} = \alpha_m + \beta_1 \lvert\Delta\sigma_{t}\rvert + \beta_2 \text{TC}_{i,t} + \beta_3 \text{VIX}_{t} + \beta_4 \text{Moneyness}_{i,t} + \beta_5 \text{TTM}_{i,t} + \varepsilon_{i,t}
-\]
-Focus: do constrained surfaces reduce hedging losses especially in high‑VIX regimes?
+**Contribution:** (i) Transaction cost boundary for ML option signals; (ii) Risk-premium vs. mispricing decomposition via delta-hedged returns; (iii) Multiple-testing-aware inference.
 
 ---
 
-## Part 4: Data Sources (must include descriptive stats table)
+## Part 3: Research Plan
 
-**Primary dataset:** **OptionMetrics IvyDB US via WRDS (access verified).**
+### Return measures
+- **Raw:** r(i,t,t+h) = [Mid(i,t+h) - Mid(i,t)] / Mid(i,t)
+- **Delta-hedged:** r_dh = r - Delta * r_underlying (isolates non-directional component)
 
-- SPX option end‑of‑day quotes (bid/ask/mid), implied vol, contract terms (K, T), liquidity measures.
-- Underlying index series and inputs for forward/discounting (risk‑free rates).
+### Feature groups (winsorized 1/99 pctile, cross-sectionally standardized)
+1. **Option-level:** IV, ln(K/F), TTM, normalized spread, log volume, log OI, delta, gamma, vega
+2. **IV surface:** ATM level, risk reversal (skew), butterfly (curvature), term structure slope
+3. **Underlying:** 5d/21d/63d returns, realized vol, VIX level, VIX change
 
-**Descriptive statistics table (to be filled in thesis):**
+### Models
+OLS, Lasso, XGBoost, Random Forest, MLP — expanding window (train up to t-4, validate t-3 to t-1, predict t)
 
-| Variable | Mean | Std | P5 | P50 | P95 | N |
-|---|---:|---:|---:|---:|---:|---:|
-| Implied volatility (IV) |  |  |  |  |  |  |
-| Log-moneyness ln(K/F) |  |  |  |  |  |  |
-| Time-to-maturity (days) |  |  |  |  |  |  |
-| Bid-ask spread |  |  |  |  |  |  |
-| Option mid price |  |  |  |  |  |  |
-| Underlying daily return |  |  |  |  |  |  |
+### Evaluation framework
+1. **Statistical:** OOS R-squared, Diebold-Mariano test vs. OLS
+2. **Economic:** Decile long-short portfolios, Sharpe ratio gross and net of costs
+3. **Cost model:** TC = lambda * half-spread; lambda in {0.5, 1.0, 1.5, 2.0}; break-even lambda*
+4. **Risk adjustment:** Factor regression alpha (MKT, SMB, HML, MOM, dVIX) with HAC standard errors
+
+### Regression tests
+- **(A) Fama-MacBeth:** r = a + b'X + e (weekly cross-sections, NW standard errors)
+- **(B) Spanning:** r = a + phi * ML_signal + b'X + e (double-clustered SE per Petersen 2009)
+- **(C) Decomposition:** r_dh = a + psi * ML_signal + gamma * VRP + delta * Skew + controls + u
+- **(D) Factor alpha:** r_net_LS = alpha + factor loadings + epsilon (HAC SE, |t| > 3.0 threshold)
+
+### Robustness
+VIX regime splits | moneyness buckets | holding period variation (1/5/10/21d) | buy-at-ask/sell-at-bid | retrain frequency | feature ablation
 
 ---
 
-## Part 5: References (APA)
+## Part 4: Data
 
-Black, F., & Scholes, M. (1973). The pricing of options and corporate liabilities. *Journal of Political Economy, 81*(3), 637–654.
+**OptionMetrics IvyDB US via WRDS (access verified)**
+- SPX options, Jan 2010 - Dec 2024 (15 years; OOS window: Jan 2013 - Dec 2024)
+- Variables: bid/ask/mid, K, TTM, IV, Greeks, volume, OI from optionm.opprcd and optionm.vsurfd
+- Supplementary: Fama-French factors, VIX, realized volatility
 
-Buehler, H., Gonon, L., Teichmann, J., & Wood, B. (2019). Deep hedging. *Quantitative Finance, 19*(8), 1271–1291.
+**Filters:** Bid > 0, Mid >= $0.50, 0.85 <= K/F <= 1.15, 14 <= TTM <= 180 days, volume >= 50, OI >= 500, winsorized 1/99 pctile. Expected sample: ~2.5M option-week observations.
 
-Choudhary, V., Jaimungal, S., & Bergeron, M. (2023). FuNVol: A multi-asset implied volatility market simulator using functional principal components and neural SDEs. *Working paper*.
+**Descriptive statistics:** See full proposal for expected ranges.
 
-François, P., Gauthier, G., Godin, F., & Pérez Mendoza, C. O. (2024). Enhancing deep hedging of options with implied volatility surface feedback information. *arXiv*.
+---
 
-Heston, S. L. (1993). A closed-form solution for options with stochastic volatility with applications to bond and currency options. *Review of Financial Studies, 6*(2), 327–343.
+## Part 5: References
 
-Hoshisashi, K., Phelan, C. E., & Barucca, P. (2024). Whack-a-mole learning: Physics-informed deep calibration for implied volatility surface. *Working paper/Proceedings*.
+Bali, T. G., et al. (2023). *Review of Financial Studies, 36*(9).
+Black, F., & Scholes, M. (1973). *Journal of Political Economy, 81*(3).
+Cao, J., & Han, B. (2013). *Journal of Financial Economics, 108*(1).
+Christoffersen, P., Heston, S., & Jacobs, K. (2013). *Review of Financial Studies, 26*(8).
+Diebold, F. X., & Mariano, R. S. (1995). *Journal of Business & Economic Statistics, 13*(3).
+Goyal, A., & Saretto, A. (2009). *Journal of Financial Economics, 94*(2).
+Gu, S., Kelly, B., & Xiu, D. (2020). *Review of Financial Studies, 33*(5).
+Harvey, C. R., Liu, Y., & Zhu, H. (2016). *Review of Financial Studies, 29*(1).
+Muravyev, D. (2016). *The Journal of Finance, 71*(2).
+Newey, W. K., & West, K. D. (1987). *Econometrica, 55*(3).
+Novy-Marx, R., & Velikov, M. (2016). *Review of Financial Studies, 29*(1).
+Petersen, M. A. (2009). *Review of Financial Studies, 22*(1).
+
+Full APA citations in `drafts/proposals/2026-02-16-proposal-3.md`.
+
+---
+
+## Timeline
+
+| Month | Deliverable |
+|---|---|
+| Mar 2026 | Data pipeline, filters, descriptive stats (Table 1) |
+| Apr 2026 | Model training, OOS R-squared, DM tests (Table 2) |
+| May 2026 | Portfolio construction, net returns, factor alphas (Tables 3-4) |
+| Jun 2026 | Robustness, SHAP, spanning/decomposition regressions (Tables 5-7) |
+| Jul 2026 | Writing, revision, supervisor feedback |
+
+---
+
+## Risks & Mitigation
+
+| Risk | Mitigation |
+|---|---|
+| Overfitting | Expanding window, early stopping, linear benchmarks, ablation |
+| Multiple testing | Harvey et al. threshold (|t| > 3.0), report all specs |
+| Look-ahead bias | All features from data at *t*; lagged filters |
+| Transaction costs underestimated | Multiple lambda levels, break-even spread, worst-case execution |
+| Regime shifts | VIX subsample analysis, report crisis drawdowns |
