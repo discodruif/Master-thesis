@@ -38,16 +38,36 @@ I will study daily SPX option quotes and underlying index data from 2015–2024.
 
 **Pricing model specification (ML):**
 
+
+a) **Readable formula (plain text):**
+
+`C_hat(i) = f( M(i), tau(i), sigma_IV(i), r ; theta )`
+
+b) **Math notation:**
+
 \[
-\hat{C}_i = f\left(M_i, \tau_i, \sigma_i^{IV}, r; \theta\right),
+\hat{C}_i = f\left(M_i, \tau_i, \sigma_i^{IV}, r; \theta\right)
 \]
 
-where \(M_i = S_i/K_i\) is moneyness, \(\tau_i\) is time to maturity (in years), \(\sigma_i^{IV}\) is implied volatility, \(r\) is the risk-free rate, and \(\theta\) denotes model parameters. The function \(f(\cdot)\) will be estimated using: (i) Random Forest, (ii) XGBoost, and (iii) a multilayer perceptron (MLP). I will consider an LSTM only if sequential features (e.g., lagged implied volatility surface metrics) add measurable value.
+with:
+- \(M_i = S_i/K_i\) = moneyness
+- \(\tau_i\) = time to maturity (years)
+- \(\sigma_i^{IV}\) = implied volatility
+- \(r\) = risk-free rate
+- \(\theta\) = model parameters
+
+The function \(f(\cdot)\) will be estimated using: (i) Random Forest, (ii) XGBoost, and (iii) a multilayer perceptron (MLP). I will consider an LSTM only if sequential features (e.g., lagged implied volatility surface metrics) add measurable value.
 
 **Pricing error definition:**
 
+a) **Readable formula (plain text):**
+
+`epsilon(i) = C_market(i) - C_hat(i)`
+
+b) **Math notation:**
+
 \[
-\varepsilon_i = C_i^{market} - \hat{C}_i.
+\varepsilon_i = C_i^{market} - \hat{C}_i
 \]
 
 Primary accuracy metrics are MAE, RMSE, and MAPE computed on out-of-sample observations, reported by moneyness and maturity buckets.
