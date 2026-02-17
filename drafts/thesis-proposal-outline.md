@@ -5,7 +5,7 @@
 **ANR:** 2062644
 **Program:** MSc Finance, Tilburg University
 **Date:** February 2026
-**Status:** Lead Proposal — full version in `drafts/proposals/2026-02-16-proposal-3.md`
+**Status:** Lead Proposal — full version in `drafts/proposals/FINAL-thesis-proposal.md`
 
 ---
 
@@ -95,7 +95,7 @@ Newey, W. K., & West, K. D. (1987). *Econometrica, 55*(3).
 Novy-Marx, R., & Velikov, M. (2016). *Review of Financial Studies, 29*(1).
 Petersen, M. A. (2009). *Review of Financial Studies, 22*(1).
 
-Full APA citations in `drafts/proposals/2026-02-16-proposal-3.md`.
+Full APA citations in `drafts/proposals/FINAL-thesis-proposal.md`.
 
 ---
 
