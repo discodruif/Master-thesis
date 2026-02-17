@@ -20,172 +20,86 @@ The cross-section of option returns exhibits predictable variation linked to imp
 
 **Sub-hypotheses:**
 
-**H1 (Predictability):** Nonlinear ML models (gradient boosted trees, neural networks) achieve higher out-of-sample R-squared in predicting weekly option returns than OLS and Lasso, with the improvement concentrated in option characteristics that proxy for volatility risk premia (IV level, skew, term structure slope).
+**H1 (Predictability):** Nonlinear ML models (gradient boosted trees, neural networks) achieve higher out-of-sample R-squared in predicting weekly option returns than OLS and Lasso, with the improvement concentrated in volatility risk premium proxies (IV level, skew, term structure slope).
 
 **H2 (Implementability):** The long-short portfolio formed on ML predictions generates a Sharpe ratio significantly greater than zero after transaction costs modeled at observed bid-ask spreads, with the break-even cost exceeding the median observed half-spread in the tradable universe.
 
-These hypotheses are jointly testable: H1 can hold while H2 fails, which would indicate that ML captures genuine predictability that is nonetheless unimplementable — a finding that is itself economically informative about the efficiency of option markets.
+These hypotheses are jointly testable: H1 can hold while H2 fails, which would indicate that ML captures genuine predictability that is nonetheless unimplementable — itself economically informative about option market efficiency.
 
 ---
 
 ## Part 2 — Literature Review (MAX 1 page)
 
-### Option return predictability and risk premia
-The Black-Scholes (1973) framework implies that, absent frictions, option characteristics should not predict returns beyond compensation for systematic risk. Empirically, this is rejected. Goyal and Saretto (2009) document that the gap between implied and realized volatility — a proxy for the variance risk premium — predicts delta-hedged option returns in the cross-section. Cao and Han (2013) show that high idiosyncratic volatility predicts low delta-hedged returns, consistent with hedging pressure from end-users depressing option prices. Christoffersen, Heston, and Jacobs (2013) demonstrate that the shape of the IV surface carries information about time-varying risk premia, linking surface dynamics to expected returns through a formal stochastic volatility model.
+The Black-Scholes (1973) framework implies that option characteristics should not predict returns beyond compensation for systematic risk. Empirically, this is rejected. Goyal and Saretto (2009) document that the implied-realized volatility gap predicts delta-hedged option returns. Cao and Han (2013) show that high idiosyncratic volatility predicts low delta-hedged returns, consistent with hedging pressure from end-users. Christoffersen, Heston, and Jacobs (2013) demonstrate that IV surface shape carries information about time-varying risk premia. These findings suggest two channels: (i) **time-varying risk premia** and (ii) **limits to arbitrage**. My thesis tests which dominates, because risk-premium-driven predictability should survive transaction costs, while limits-to-arbitrage predictability may not.
 
-These findings suggest two economic channels for option return predictability: (i) **time-varying risk premia** (investors demand compensation for bearing volatility, jump, and correlation risk) and (ii) **limits to arbitrage** (transaction costs, margin constraints, and model uncertainty prevent full price correction). My thesis directly tests which channel dominates, because risk-premium-driven predictability should be robust to transaction costs (it compensates a real risk), while limits-to-arbitrage-driven predictability may vanish once costs are included.
+Gu, Kelly, and Xiu (2020) establish the methodological standard for ML in cross-sectional return prediction: rolling time-series splits, linear benchmarks, and portfolio-based evaluation. **Bali et al. (2023)** apply this framework to option returns, finding that ML-based long-short strategies earn substantial returns. My thesis extends their work by (i) focusing explicitly on the **transaction cost boundary** and (ii) decomposing predictability into risk-premium vs. mispricing components using delta-hedged returns.
 
-### Machine learning in asset pricing
-Gu, Kelly, and Xiu (2020) establish the methodological standard for ML in cross-sectional return prediction: rolling time-series splits, comparison to linear benchmarks, and economic evaluation via portfolio sorts. They show that tree-based models and neural networks capture nonlinear interactions among firm characteristics that linear models miss. Bali et al. (2023) apply this framework to option returns using a comprehensive set of option-level and underlying characteristics, finding that ML-based long-short strategies earn substantial returns. My thesis extends their work by (i) focusing explicitly on the transaction cost boundary — the point at which alpha disappears — and (ii) decomposing predictability into risk-premium vs. mispricing components using delta-hedged returns.
+Option markets are characterized by wide spreads, especially for OTM contracts (Muravyev, 2016). Novy-Marx and Velikov (2016) show that trading costs eliminate many equity anomaly profits. No comparable analysis exists for ML-based option strategies — this is the gap my thesis fills.
 
-### Transaction costs and implementability
-Option market microstructure is characterized by wide spreads, especially for short-dated OTM contracts (Muravyev, 2016). The implementability of any option trading strategy depends critically on whether signals concentrate in liquid contracts or in the illiquid tails where spreads erode returns. Novy-Marx and Velikov (2016) demonstrate for equity strategies that accounting for trading costs can eliminate or substantially reduce anomaly profits. No comparable systematic analysis exists for ML-based option strategies, which is the gap this thesis fills.
-
-### Contribution
-This thesis makes three contributions. First, I quantify the **transaction cost boundary** for ML option signals by computing break-even spreads across moneyness and maturity buckets. Second, I test whether predictability reflects **risk premia or mispricing** by comparing results for raw vs. delta-hedged returns and by conditioning on VIX regimes. Third, I address **multiple testing concerns** (Harvey, Liu, & Zhu, 2016) by reporting adjusted t-statistics and by evaluating the full decile spread rather than cherry-picked subsamples.
+**Contributions:** (i) I quantify the transaction cost boundary by computing break-even spreads across moneyness/maturity buckets. (ii) I test risk premia vs. mispricing by comparing raw and delta-hedged returns across VIX regimes. (iii) I address multiple testing (Harvey, Liu, & Zhu, 2016) by applying a |t| > 3.0 threshold.
 
 ---
 
-## Part 3 — Research Plan (~500 words)
+## Part 3 — Research Plan (~500 words; include regression equations)
 
-### 3.1 Return definitions
+### Return definitions
+For each option *i* on date *t*, I compute two return measures (holding period *h* = 5 trading days):
 
-For each option contract *i* on date *t*, I define two return measures over holding period *h* (baseline: 5 trading days):
+> **r(i,t,t+h) = [Mid(i,t+h) - Mid(i,t)] / Mid(i,t)**
 
-**Raw option return:**
-> **r(i, t, t+h) = [ Mid(i, t+h) - Mid(i, t) ] / Mid(i, t)**
+> **r_dh(i,t,t+h) = r(i,t,t+h) - Delta(i,t) * r_underlying(t,t+h)**
 
-**Delta-hedged return** (isolates non-directional component):
-> **r_dh(i, t, t+h) = r(i, t, t+h) - Delta(i, t) * r_underlying(t, t+h)**
+The delta-hedged return isolates non-directional (volatility risk premium) predictability from directional exposure.
 
-where Mid is the bid-ask midpoint and Delta is the Black-Scholes delta from OptionMetrics. Using both measures allows me to test whether ML signals capture directional (underlying) exposure or option-specific predictability linked to volatility risk premia.
+### Feature set and ML models
+Predictors include option-level characteristics (IV, log-moneyness ln(K/F), TTM, normalized spread, volume, Greeks), IV surface features (ATM level, skew, term structure slope), and underlying characteristics (momentum, realized volatility, VIX). All features are winsorized at 1st/99th percentiles monthly and cross-sectionally standardized.
 
-### 3.2 Feature set
+I estimate five models: OLS, Lasso, XGBoost, Random Forest, and a Multilayer Perceptron (MLP). Training uses an expanding window: train up to month *t-4*, validate on *t-3* to *t-1*, predict month *t*. I report out-of-sample R-squared and **Diebold-Mariano tests** (Diebold & Mariano, 1995) comparing each ML model to OLS.
 
-The predictor vector X(i,t) contains three groups:
+### Portfolio construction and cost analysis
+Each week, I sort options into decile portfolios based on predicted returns. The long-short (LS) portfolio goes long the top decile, short the bottom decile (equal-weighted). Eligibility: Mid >= $0.50, volume >= 50, OI >= 500, moneyness 0.85-1.15, TTM 14-180 days. Transaction costs are modeled as:
 
-| Group | Variables |
-|---|---|
-| **Option-level** | IV, log-moneyness ln(K/F), days to expiry, normalized bid-ask spread, log volume, log open interest, delta, gamma, vega |
-| **IV surface** | ATM IV level, 25-delta risk reversal (skew), 25-delta butterfly (curvature), term structure slope (90d IV minus 30d IV) |
-| **Underlying** | 5-day, 21-day, 63-day past returns (momentum/reversal), 21-day realized volatility, VIX level, VIX change |
+> **TC(i,t) = lambda * [Ask(i,t) - Bid(i,t)] / 2**
 
-All features are winsorized at the 1st and 99th percentiles each month to limit the influence of outliers. Features are standardized (zero mean, unit variance) within each cross-section to ensure comparability across time.
+with lambda in {0.5, 1.0, 1.5, 2.0}. I compute the **break-even lambda*** where net Sharpe = 0.
 
-### 3.3 ML models and training protocol
+### Regression equations
 
-| Model | Specification |
-|---|---|
-| **OLS** | Linear benchmark; all features enter linearly |
-| **Lasso** | L1-penalized linear; tests whether feature selection alone improves prediction |
-| **Gradient Boosted Trees (XGBoost)** | max_depth in {3, 5, 7}, learning_rate in {0.01, 0.05, 0.1}, n_estimators up to 1000 with early stopping |
-| **Random Forest** | max_depth in {5, 10, None}, n_estimators = 500 |
-| **Multilayer Perceptron** | 2 hidden layers (64, 32), ReLU activation, dropout = 0.2, Adam optimizer, early stopping on validation loss |
+**(A) Fama-MacBeth predictive regression** (weekly cross-sections, Newey-West SE):
+> **r(i,t,t+h) = a(t) + b(t)' * X(i,t) + e(i,t)**
 
-**Training protocol.** I use an expanding window: train on all data up to month *t - 4*, validate on months *t - 3* to *t - 1* for hyperparameter selection, and predict month *t*. This ensures strictly out-of-sample predictions and mimics real-time implementability. Predictions are generated monthly; portfolios are rebalanced weekly within each month using the same model.
+**(B) ML spanning test** (double-clustered SE per Petersen, 2009):
+> **r(i,t,t+h) = a(t) + phi(t) * s(i,t) + b(t)' * X(i,t) + e(i,t)**
 
-**Forecast evaluation.** I report out-of-sample R-squared:
-> **R2_oos = 1 - SUM[ (r_i - r-hat_i)^2 ] / SUM[ (r_i - r-bar)^2 ]**
-
-where r-bar is the cross-sectional mean return. I also apply the **Diebold-Mariano test** to compare squared prediction errors between each ML model and the OLS benchmark, using Newey-West standard errors with lag h to account for autocorrelation in forecast errors.
-
-### 3.4 Portfolio construction and transaction cost analysis
-
-**Portfolio formation.** Each week, I sort options into decile portfolios based on predicted return r-hat(i,t). The long-short (LS) portfolio goes long the top decile and short the bottom decile, equal-weighted within each leg.
-
-**Eligibility filters (tradable universe):**
-- Bid > 0 and Mid >= $0.50 (avoids penny options with extreme percentage spreads)
-- Volume >= 50 contracts/day and Open interest >= 500
-- Moneyness: 0.85 <= K/F <= 1.15
-- Time to maturity: 14 to 180 calendar days
-
-**Transaction cost model.** Each trade incurs a cost equal to a fraction of the observed bid-ask spread:
-> **TC(i, t) = lambda * [ Ask(i, t) - Bid(i, t) ] / 2**
-
-where lambda = 1 is the baseline (full half-spread) and lambda in {0.5, 1.0, 1.5, 2.0} provides sensitivity analysis. Net portfolio return:
-> **r_net_LS(t) = r_gross_LS(t) - (1/N) * SUM[i in trades] TC(i, t) / Mid(i, t)**
-
-**Break-even spread.** For each portfolio, I compute the cost level lambda* at which the annualized net Sharpe ratio equals zero. This single number summarizes implementability: if lambda* > 1, the strategy survives full half-spread costs.
-
-### 3.5 Regression-based tests
-
-**(A) Cross-sectional predictive regression (Fama-MacBeth style):**
-
-Each week *t*, estimate:
-> **r(i, t, t+h) = a(t) + b(t)' * X(i, t) + e(i, t)**
-
-Report time-series averages of b(t) with Newey-West standard errors (4 lags). This provides a linear benchmark and identifies which characteristics have standalone predictive power. Standard errors are computed using the Newey-West (1987) procedure to account for autocorrelation in the weekly coefficient estimates.
-
-**(B) ML signal spanning test:**
-> **r(i, t, t+h) = a(t) + phi(t) * s(i, t) + b(t)' * X(i, t) + e(i, t)**
-
-where s(i,t) is the ML predicted return (from the out-of-sample prediction). A significant time-series average of phi indicates that ML contains information beyond the linear combination of characteristics. I double-cluster standard errors by option and week following Petersen (2009) to address both cross-sectional and time-series correlation.
+where s(i,t) is the out-of-sample ML prediction. Significant phi indicates ML information beyond linear characteristics.
 
 **(C) Risk-premium vs. mispricing decomposition:**
-> **r_dh(i, t, t+h) = a + psi * s(i, t) + gamma * VRP(t) + delta * Skew(t) + controls + u(i, t)**
+> **r_dh(i,t,t+h) = a + psi * s(i,t) + gamma * VRP(t) + delta * Skew(t) + controls + u(i,t)**
 
-where VRP(t) = IV(t) - RV(t) is the variance risk premium and Skew(t) is the option-implied skewness. If psi remains significant after controlling for aggregate risk-premium proxies, the ML signal captures option-level mispricing rather than time-varying compensation for systematic risk.
+If psi remains significant after controlling for aggregate risk-premium proxies, ML captures option-level mispricing.
 
-**(D) Factor-model alpha:**
-> **r_net_LS(t) = alpha + b1 * MKT(t) + b2 * SMB(t) + b3 * HML(t) + b4 * MOM(t) + b5 * dVIX(t) + epsilon(t)**
+**(D) Factor-model alpha** (Newey-West HAC, 4 lags; |t| > 3.0 per Harvey et al., 2016):
+> **r_net_LS(t) = alpha + b1*MKT(t) + b2*SMB(t) + b3*HML(t) + b4*MOM(t) + b5*dVIX(t) + epsilon(t)**
 
-The intercept alpha is the risk-adjusted net return. I test alpha = 0 using HAC standard errors (Newey-West, 4 lags) and report the associated t-statistic. Following Harvey et al. (2016), I apply a threshold of |t| > 3.0 rather than the conventional 1.96 to account for multiple testing across model specifications and subsamples.
-
-### 3.6 Robustness
-
-| Test | Purpose |
-|---|---|
-| **VIX regime split** (above/below median) | Tests whether alpha concentrates in high-vol periods (limits-to-arbitrage prediction) or is stable (risk-premium prediction) |
-| **Moneyness buckets** (ATM / OTM puts / OTM calls) | Identifies where ML signal is strongest; OTM puts have widest spreads and most skew |
-| **Holding period** (1, 5, 10, 21 days) | Quantifies turnover-alpha tradeoff; longer horizons reduce costs but may dilute signal |
-| **Conservative execution** (buy at ask, sell at bid) | Worst-case implementability bound |
-| **Retrain frequency** (monthly vs. quarterly) | Tests model stability and practical retraining burden |
-| **Feature ablation** | Removes feature groups one at a time to identify key predictive drivers |
+### Robustness and risk mitigation
+VIX regime splits (high vs. low); moneyness buckets (ATM, OTM puts, OTM calls); holding period variation (1, 5, 10, 21 days); conservative execution (buy at ask, sell at bid); retrain frequency (monthly vs. quarterly); feature ablation. **Overfitting** is mitigated by expanding-window training, early stopping, and linear benchmarks. **Look-ahead bias** is prevented by computing all features from data at *t* only.
 
 ---
 
-## Part 4 — Data Sources (~400 words)
+## Part 4 — Data Sources (~400 words; include descriptive statistics table; confirm access)
 
-### 4.1 Primary data
+### Primary data
+**OptionMetrics IvyDB US via WRDS (access verified through Tilburg University's WRDS subscription).** End-of-day SPX option data, January 2010 through December 2024 (15 years). Training burn-in: 2010-2012; out-of-sample evaluation: January 2013 to December 2024 (12 years).
 
-**OptionMetrics IvyDB US via WRDS (access verified).** I use end-of-day option data for S&P 500 index options (SPX), January 2010 through December 2024. This 15-year sample spans the European debt crisis (2011-2012), the low-volatility environment (2014-2019), the COVID crash (March 2020), the meme-stock/retail-options episode (2021), and the rate-hiking cycle (2022-2024). The training burn-in consumes the first 36 months (2010-2012), producing out-of-sample predictions from January 2013 through December 2024 — a 12-year evaluation window.
+Variables: bid, ask, mid price; strike (K); expiration/TTM; implied volatility; delta, gamma, vega; volume; open interest; option type (C/P). Underlying: SPX index close. Risk-free rate: OptionMetrics zero-coupon curve.
 
-**Variables extracted from IvyDB:**
+### Supplementary data
+Fama-French factors + Momentum (Kenneth French Data Library via WRDS); CBOE VIX index; realized volatility (trailing 21-day annualized standard deviation of daily SPX log-returns).
 
-| Variable | IvyDB Table | Description |
-|---|---|---|
-| Bid, Ask, Mid price | optionm.opprcd | End-of-day option quotes |
-| Strike (K) | optionm.opprcd | Contract strike price |
-| Expiration date, TTM | optionm.opprcd | Time to maturity in calendar days |
-| Implied volatility | optionm.vsurfd / opprcd | Black-Scholes IV from OptionMetrics |
-| Delta, Gamma, Vega | optionm.opprcd | OptionMetrics-computed Greeks |
-| Volume, Open interest | optionm.opprcd | Daily trading activity |
-| Option type (C/P) | optionm.opprcd | Call or put indicator |
-| SPX close | optionm.secprd | Underlying index level |
-| Forward price (F) | Computed | F = S * exp(r * tau), using zero-curve |
-| Risk-free rate | optionm.zerocd | Zero-coupon yield curve |
+### Sample filters
+Remove: Bid <= 0; Mid < $0.50; moneyness outside [0.85, 1.15]; TTM < 14 or > 180 days; duplicates. Winsorize all features and returns at 1st/99th percentiles monthly. Apply stricter liquidity filters (volume >= 50, OI >= 500) for the tradable universe. Expected sample: ~2.5 million option-week observations.
 
-### 4.2 Supplementary data
-
-- **Fama-French factors + Momentum:** Kenneth French Data Library via WRDS (daily MKT, SMB, HML, MOM).
-- **VIX:** CBOE VIX index (daily close), from WRDS or direct download.
-- **Realized volatility:** Computed as annualized standard deviation of daily SPX log-returns over trailing 21-day window.
-
-### 4.3 Sample construction and filters
-
-| Filter | Rule | Rationale |
-|---|---|---|
-| Zero or negative bid | Remove if Bid <= 0 | Unreliable quotes |
-| Extreme moneyness | Keep 0.85 <= K/F <= 1.15 | Removes deep ITM/OTM with unreliable IV |
-| Short-dated | Remove if TTM < 14 days | Avoid expiration effects and gamma risk |
-| Long-dated | Remove if TTM > 180 days | Illiquid, wide spreads, few observations |
-| Penny options | Remove if Mid < $0.50 | Percentage spreads are extreme |
-| Duplicates | Keep last observation per option-date | Standard cleaning |
-| Winsorization | 1st/99th percentile per month for all features and returns | Limits outlier influence |
-
-After filters, the expected sample size is approximately 2-3 million option-week observations.
-
-### 4.4 Descriptive statistics (expected ranges from SPX options literature)
+### Descriptive statistics (expected ranges from SPX options literature)
 
 | Variable | Mean | Std | P5 | P50 | P95 | N (approx.) |
 |---|---:|---:|---:|---:|---:|---:|
@@ -194,29 +108,14 @@ After filters, the expected sample size is approximately 2-3 million option-week
 | Implied volatility | 0.19 | 0.09 | 0.10 | 0.17 | 0.38 | ~2,500,000 |
 | Bid-ask spread (% of mid) | 8.5 | 12.3 | 0.5 | 4.2 | 32.0 | ~2,500,000 |
 | Volume (contracts/day) | 285 | 2,100 | 2 | 35 | 850 | ~2,500,000 |
-| Open interest | 4,200 | 12,500 | 50 | 1,200 | 18,000 | ~2,500,000 |
 | Log-moneyness ln(K/F) | -0.02 | 0.10 | -0.15 | -0.01 | 0.12 | ~2,500,000 |
 | Time to maturity (days) | 58 | 45 | 15 | 42 | 150 | ~2,500,000 |
 
-*Note: Values are expected ranges based on published SPX options studies. Final statistics will be computed from the actual filtered sample.*
+*Note: Expected ranges based on published SPX options studies. Final values computed from actual filtered sample.*
 
 ---
 
-## Part 5 — Risks, Limitations, and Mitigation
-
-| Risk | Impact | Mitigation |
-|---|---|---|
-| **Overfitting** | ML models fit noise, OOS performance collapses | Strict expanding-window protocol; validation-based early stopping; comparison to linear benchmarks; feature ablation |
-| **Multiple testing** | Testing many models and subsamples inflates false discovery rate | Apply Harvey et al. (2016) adjusted t-statistic threshold (|t| > 3.0); report all specifications, not cherry-picked results |
-| **Look-ahead bias** | Using future information in features or filters | All features computed from data available at *t*; filters applied using lagged volume/OI; forward price uses contemporaneous zero-curve only |
-| **Regime shifts** | Model trained on low-vol data performs poorly in crisis | Expanding window includes all past regimes; explicit VIX-regime subsample analysis; report drawdowns during COVID crash |
-| **Transaction costs underestimated** | Real execution costs exceed half-spread assumption | Report results at multiple cost levels (lambda = 0.5 to 2.0); compute break-even spread; worst-case buy-at-ask/sell-at-bid bound |
-| **Data limitations** | WRDS download limits; intraday data unavailable | Focus on daily end-of-day data (standard in literature); sample period adjustable; SPX is the most liquid option market |
-| **Survivorship/selection bias** | SPX index options are not subject to delisting, but contract filters may introduce selection | Document filter impact by comparing filtered vs. unfiltered descriptive statistics |
-
----
-
-## Part 6 — References (APA)
+## Part 5 — References (APA)
 
 Bali, T. G., Beckmeyer, H., Moerke, M., & Weigert, F. (2023). Option return predictability with machine learning and big data. *Review of Financial Studies, 36*(9), 3548-3600.
 
@@ -241,17 +140,3 @@ Newey, W. K., & West, K. D. (1987). A simple, positive semi-definite, heterosked
 Novy-Marx, R., & Velikov, M. (2016). A taxonomy of anomalies and their trading costs. *Review of Financial Studies, 29*(1), 104-147.
 
 Petersen, M. A. (2009). Estimating standard errors in finance panel data sets: Comparing approaches. *Review of Financial Studies, 22*(1), 435-480.
-
----
-
-## Part 7 — Feasibility and Timeline
-
-| Period | Deliverable |
-|---|---|
-| **Month 1** (Mar 2026) | Data pipeline: extract IvyDB SPX panel via WRDS, apply filters, compute returns and features. Verify sample against published descriptive statistics. Produce Table 1 (descriptive stats). |
-| **Month 2** (Apr 2026) | Model training: implement expanding-window pipeline for all five models. Compute OOS R-squared and Diebold-Mariano tests. Produce Table 2 (forecast comparison). |
-| **Month 3** (May 2026) | Portfolio analysis: construct decile portfolios, compute gross and net returns under all cost scenarios. Estimate factor regressions. Produce Tables 3-4 (portfolio returns, factor alphas). |
-| **Month 4** (Jun 2026) | Robustness and interpretation: VIX regimes, moneyness buckets, feature ablation, SHAP importance. Estimate spanning and decomposition regressions. Produce Tables 5-7 and figures. |
-| **Month 5** (Jul 2026) | Writing, revision, and buffer for supervisor feedback. |
-
-**Computational requirements:** All models are estimable on a standard laptop (16GB RAM). XGBoost and Random Forest are the most computationally intensive; estimated training time per rolling window is < 5 minutes. Full pipeline (12 years x 12 months x 5 models) requires approximately 30-40 hours of total computation, easily parallelizable.
