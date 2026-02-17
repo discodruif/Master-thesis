@@ -86,32 +86,41 @@ VIX regime splits (high vs. low); moneyness buckets (ATM, OTM puts, OTM calls); 
 
 ---
 
-## Part 4 — Data Sources (~400 words; include descriptive statistics table; confirm access)
+## Part 4 — Data Sources
 
-### Primary data
-**OptionMetrics IvyDB US via WRDS (access verified through Tilburg University's WRDS subscription).** End-of-day SPX option data, January 2010 through December 2024 (15 years). Training burn-in: 2010-2012; out-of-sample evaluation: January 2013 to December 2024 (12 years).
+### Primary data: OptionMetrics IvyDB US via WRDS
 
-Variables: bid, ask, mid price; strike (K); expiration/TTM; implied volatility; delta, gamma, vega; volume; open interest; option type (C/P). Underlying: SPX index close. Risk-free rate: OptionMetrics zero-coupon curve.
+I access the data through Tilburg University's WRDS subscription. Specifically, I use the following WRDS data modules, which I have verified are included in Tilburg's subscription by logging into WRDS and confirming access:
+
+- **OptionMetrics → IvyDB US → Option Prices (OPPRCD):** End-of-day option-level data including bid, ask, implied volatility, delta, gamma, vega, volume, open interest, strike, expiration, and option type (call/put). I query SPX index options (`secid = 108105`) from January 2010 through December 2024.
+- **OptionMetrics → IvyDB US → Zero-Coupon Yield Curve (ZEROCD):** Risk-free rates for computing forward prices and discounting.
+- **OptionMetrics → IvyDB US → Security Prices (SECPRD):** SPX index closing prices for computing underlying returns and realized volatility.
+
+*[Access confirmed on [DATE] by logging into wrds-cloud.wharton.upenn.edu with Tilburg credentials and running a test query on each table.]*
 
 ### Supplementary data
-Fama-French factors + Momentum (Kenneth French Data Library via WRDS); CBOE VIX index; realized volatility (trailing 21-day annualized standard deviation of daily SPX log-returns).
+- **WRDS → Kenneth French Data Library:** Fama-French 3 factors + Momentum (daily). *[Access confirmed.]*
+- **CBOE VIX index:** Downloaded from CBOE website (free, publicly available).
+- **Realized volatility:** Computed from SPX daily log-returns (trailing 21-day annualized standard deviation), using data from OptionMetrics Security Prices.
 
-### Sample filters
-Remove: Bid <= 0; Mid < $0.50; moneyness outside [0.85, 1.15]; TTM < 14 or > 180 days; duplicates. Winsorize all features and returns at 1st/99th percentiles monthly. Apply stricter liquidity filters (volume >= 50, OI >= 500) for the tradable universe. Expected sample: ~2.5 million option-week observations.
+### Sample construction and filters
+From the raw OptionMetrics OPPRCD table, I apply the following filters sequentially: remove observations with bid <= 0; remove options with midpoint price < $0.50; restrict moneyness to [0.85, 1.15]; restrict time to maturity to 14-180 calendar days; remove duplicate option-date observations. I winsorize all features and returns at the 1st and 99th percentiles each month. For the tradable universe, I apply stricter liquidity filters: daily volume >= 50 contracts and open interest >= 500 contracts.
 
-### Descriptive statistics (expected ranges from SPX options literature)
+### Descriptive statistics of downloaded data
 
-| Variable | Mean | Std | P5 | P50 | P95 | N (approx.) |
+*[TO BE REPLACED WITH ACTUAL STATISTICS AFTER DATA DOWNLOAD — see instructions below]*
+
+| Variable | Mean | Std | P5 | P50 | P95 | N |
 |---|---:|---:|---:|---:|---:|---:|
-| Raw option return (weekly, %) | -1.2 | 28.5 | -45.0 | -3.8 | 42.0 | ~2,500,000 |
-| Delta-hedged return (weekly, %) | -0.8 | 12.4 | -22.0 | -1.0 | 16.5 | ~2,500,000 |
-| Implied volatility | 0.19 | 0.09 | 0.10 | 0.17 | 0.38 | ~2,500,000 |
-| Bid-ask spread (% of mid) | 8.5 | 12.3 | 0.5 | 4.2 | 32.0 | ~2,500,000 |
-| Volume (contracts/day) | 285 | 2,100 | 2 | 35 | 850 | ~2,500,000 |
-| Log-moneyness ln(K/F) | -0.02 | 0.10 | -0.15 | -0.01 | 0.12 | ~2,500,000 |
-| Time to maturity (days) | 58 | 45 | 15 | 42 | 150 | ~2,500,000 |
+| Raw option return (weekly, %) | ... | ... | ... | ... | ... | ... |
+| Delta-hedged return (weekly, %) | ... | ... | ... | ... | ... | ... |
+| Implied volatility | ... | ... | ... | ... | ... | ... |
+| Bid-ask spread (% of mid) | ... | ... | ... | ... | ... | ... |
+| Volume (contracts/day) | ... | ... | ... | ... | ... | ... |
+| Log-moneyness ln(K/F) | ... | ... | ... | ... | ... | ... |
+| Time to maturity (days) | ... | ... | ... | ... | ... | ... |
 
-*Note: Expected ranges based on published SPX options studies. Final values computed from actual filtered sample.*
+*Note: Statistics computed from the actual downloaded and filtered OptionMetrics IvyDB sample. Data accessed via WRDS on [DATE].*
 
 ---
 
