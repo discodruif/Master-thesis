@@ -1,0 +1,98 @@
+================================================================================
+  DESCRIPTIVE STATISTICS REPORT
+  SPX Options Dataset — Thesis: ML for Option Mispricing
+  Author: Maurits van Eck (ANR: 2062644)
+================================================================================
+
+1. DATASET OVERVIEW
+----------------------------------------
+   Date range:         2010-01-05 to 2017-08-25
+   Trading days:       608
+   Total observations: 7,469
+   Unique options:     7,469
+   Calls:              3,914 (52.4%)
+   Puts:               3,555 (47.6%)
+   Avg obs/day:        12
+
+2. KEY VARIABLE STATISTICS (Full Sample)
+----------------------------------------
+   Option mid price ($)                Mean=   61.9148  Std=   54.6035  Med=   50.8200  N=     7,469
+   Implied volatility                  Mean=    0.1803  Std=    0.0169  Med=    0.1798  N=     7,469
+   Log-moneyness ln(K/F)               Mean=   -0.0093  Std=    0.0948  Med=   -0.0023  N=     7,469
+   Days to expiry                      Mean=   17.7104  Std=    3.4939  Med=   21.0000  N=     7,469
+   Delta                               Mean=    0.0636  Std=    0.7929  Med=    0.0547  N=     7,469
+   |Delta|                             Mean=    0.7143  Std=    0.3499  Med=    0.9243  N=     7,469
+   Gamma                               Mean=    0.0042  Std=    0.0045  Med=    0.0025  N=     7,469
+   Vega                                Mean=    0.2791  Std=    0.2938  Med=    0.1755  N=     7,469
+   Theta                               Mean=   -0.1431  Std=    0.1562  Med=   -0.0951  N=     7,469
+   Bid-ask spread ($)                  Mean=    3.6831  Std=    3.8922  Med=    2.2100  N=     7,469
+   Relative spread (%)                 Mean=    5.6832  Std=    4.4987  Med=    4.8316  N=     7,469
+   Volume (contracts)                  Mean= 1359.5326  Std= 3449.4494  Med=  438.0000  N=     7,469
+   Open interest                       Mean=16223.7925  Std=59476.6358  Med= 3299.0000  N=     7,469
+   Log(1+volume)                       Mean=    6.1211  Std=    1.4449  Med=    6.0845  N=     7,469
+   Log(1+OI)                           Mean=    8.1479  Std=    1.6976  Med=    8.1017  N=     7,469
+   IV − RV(21d)                        Mean=    0.0214  Std=    0.0247  Med=    0.0207  N=     7,406
+   VIX level                           Mean=   18.7091  Std=    2.1155  Med=   18.6100  N=     7,469
+   ATM IV                              Mean=    0.1796  Std=    0.0163  Med=    0.1795  N=     7,469
+   IV skew (25Δ put − ATM)             Mean=    0.0062  Std=    0.0048  Med=    0.0063  N=     7,469
+   IV term slope                       Mean=    0.0000  Std=    0.0013  Med=    0.0001  N=     7,321
+   SPX return (5d)                     Mean=   -0.0013  Std=    0.0220  Med=   -0.0003  N=     7,454
+   SPX return (21d)                    Mean=   -0.0037  Std=    0.0503  Med=   -0.0009  N=     7,406
+   Realized vol (21d)                  Mean=    0.1591  Std=    0.0242  Med=    0.1578  N=     7,406
+   Realized vol (63d)                  Mean=    0.1598  Std=    0.0139  Med=    0.1604  N=     7,325
+   Option return (h-period)            Mean=    0.0337  Std=    1.0029  Med=   -0.0252  N=     7,469
+
+3. VIX REGIME COMPARISON
+----------------------------------------
+
+   Low VIX (≤ 18.6):
+      Implied volatility                  Mean=    0.1706  Std=    0.0124
+      Relative spread (%)                 Mean=    5.7243  Std=    4.9480
+      Volume (contracts)                  Mean= 1295.4299  Std= 2966.6248
+      IV − RV(21d)                        Mean=    0.0157  Std=    0.0251
+
+   High VIX (> 18.6):
+      Implied volatility                  Mean=    0.1902  Std=    0.0150
+      Relative spread (%)                 Mean=    5.6417  Std=    3.9940
+      Volume (contracts)                  Mean= 1424.3082  Std= 3876.0706
+      IV − RV(21d)                        Mean=    0.0270  Std=    0.0229
+
+4. MONEYNESS BUCKET COMPARISON
+----------------------------------------
+
+   ATM (|m| < 0.03) (N=2,192):
+      Implied volatility                  Mean=    0.1797  Std=    0.0167
+      Relative spread (%)                 Mean=    3.3683  Std=    0.3109
+      Volume (contracts)                  Mean= 1397.3577  Std= 3512.4376
+
+   OTM Puts (m < -0.03) (N=568):
+      Implied volatility                  Mean=    0.1864  Std=    0.0173
+      Relative spread (%)                 Mean=   10.4507  Std=   10.6382
+      Volume (contracts)                  Mean= 1361.0070  Std= 3083.0704
+
+   OTM Calls (m > 0.03) (N=461):
+      Implied volatility                  Mean=    0.1792  Std=    0.0160
+      Relative spread (%)                 Mean=   10.0669  Std=   10.2452
+      Volume (contracts)                  Mean= 1198.2126  Std= 2614.0987
+
+   ITM Puts (N=1,889):
+      Implied volatility                  Mean=    0.1752  Std=    0.0160
+      Relative spread (%)                 Mean=    5.7160  Std=    1.0816
+      Volume (contracts)                  Mean= 1349.4870  Std= 3019.7133
+
+   ITM Calls (N=2,359):
+      Implied volatility                  Mean=    0.1838  Std=    0.0165
+      Relative spread (%)                 Mean=    5.8035  Std=    1.0736
+      Volume (contracts)                  Mean= 1363.5998  Std= 3910.8119
+
+5. MATURITY BUCKET COMPARISON
+----------------------------------------
+
+   Near-term (7-30d) (N=7,469):
+      Implied volatility                  Mean=    0.1803  Std=    0.0169
+      Relative spread (%)                 Mean=    5.6832  Std=    4.4987
+      Option mid price ($)                Mean=   61.9148  Std=   54.6035
+
+================================================================================
+  Report generated by 03_descriptive_statistics.py
+================================================================================

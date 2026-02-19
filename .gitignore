@@ -191,6 +191,15 @@ cython_debug/
 # Ruff stuff:
 .ruff_cache/
 
+# Data files (large, regenerable)
+data/raw/*.parquet
+data/processed/*.parquet
+data/raw/*.csv
+data/processed/*.csv
+
+# API keys
+config/nyt-api-key.txt
+
 # PyPI configuration file
 .pypirc
 
